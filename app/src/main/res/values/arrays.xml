@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="kota">
+        <item>Banyuwangi</item>
+        <item>Bondowoso</item>
+        <item>Tuban</item>
+        <item>Situbondo</item>
+    </string-array>
+    <string-array name="jenkel">
+        <item>Laki - Laki</item>
+        <item>Perempuan</item>
+    </string-array>
+    <string-array name="goldar">
+        <item>A</item>
+        <item>B</item>
+        <item>AB</item>
+        <item>O</item>
+    </string-array>
+    <string-array name="RT">
+        <item>001</item>
+        <item>002</item>
+        <item>003</item>
+    </string-array>
+    <string-array name="RW">
+        <item>001</item>
+        <item>002</item>
+        <item>003</item>
+    </string-array>
+    <string-array name="kelurahan">
+        <item>Baratan</item>
+        <item>Kembang</item>
+        <item>Pancoran</item>
+        <item>Badean</item>
+        <item>Blindungan</item>
+        <item>Dabasah</item>
+        <item>Dadapan</item>
+        <item>Dawuhan</item>
+        <item>Grujugan</item>
+    </string-array>
+    <string-array name="kecamatan">
+        <item>Bondowoso</item>
+        <item>Binakal</item>
+        <item>Grujugan</item>
+    </string-array>
+    <string-array name="agama">
+        <item>Islam</item>
+        <item>Kristen</item>
+        <item>Katolik</item>
+        <item>Hindu</item>
+        <item>Budha</item>
+        <item>Konghucu</item>
+    </string-array>
+    <string-array name="status">
+        <item>Kawin</item>
+        <item>Belum Kawin</item>
+    </string-array>
+    <string-array name="kewarganegaraan">
+        <item>WNI</item>
+        <item>WNA</item>
+    </string-array>
+</resources>
