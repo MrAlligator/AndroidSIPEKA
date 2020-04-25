@@ -58,4 +58,8 @@
         <item>WNI</item>
         <item>WNA</item>
     </string-array>
+    <string-array name="grafik">
+        <item>Jenis Kelamin</item>
+        <item>Usia</item>
+    </string-array>
 </resources>
