@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".KeluargaActivity"
+            android:label="Tambah Keluarga"
+            android:name=".TambahKeluargaActivity"/>
+        <activity
             android:name=".TambahActivity"
             android:label="Tambah Penduduk"
             android:parentActivityName=".PendudukActivity"
