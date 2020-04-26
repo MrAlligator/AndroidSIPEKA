@@ -1,8 +1,10 @@
 package com.example.sipeka;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
@@ -22,12 +24,22 @@ public class LoginActivity extends AppCompatActivity {
     EditText username, password;
     Button masuk;
     TextView lupa;
+    SharedPreferences sharedPreferences;
 
     Boolean pwdstatus = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        sharedPreferences = getSharedPreferences("remember", MODE_PRIVATE);
+        if(sharedPreferences.getString("username", "").isEmpty()) {
+
+        } else {
+            Intent login = new Intent(LoginActivity.this, MainActivity.class);
+            login.putExtra("username", sharedPreferences.getString("username", ""));
+            startActivity(login);
+        }
 
         showpass = findViewById(R.id.showpass);
         masuk = findViewById(R.id.button);
@@ -55,12 +67,42 @@ public class LoginActivity extends AppCompatActivity {
         masuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (username.getText().toString().equals("admin") && password.getText().toString().equals("admin")) {
-                    Toast.makeText(getApplicationContext(), "Login Sukses", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                String usernameKey = username.getText().toString();
+                String passwordKey = password.getText().toString();
+
+                if (usernameKey.equals("admin") && passwordKey.equals("admin")){
+                    //Session
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("username",usernameKey);
+                    editor.commit();
+                    //End Session
+                    //jika login berhasil
+                    Toast.makeText(getApplicationContext(), "Login Berhasil",
+                            Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    LoginActivity.this.startActivity(intent);
                     finish();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Username atau Password Anda Salah", Toast.LENGTH_SHORT).show();
+                }
+                else if(usernameKey.isEmpty() && passwordKey.isEmpty()){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    builder.setMessage("Username dan Password tidak boleh Kosong!")
+                            .setNegativeButton("Retry", null).create().show();
+                }
+                else if(usernameKey.isEmpty()){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    builder.setMessage("Masukkan Username Anda!")
+                            .setNegativeButton("Retry", null).create().show();
+                }
+                else if(passwordKey.isEmpty()){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    builder.setMessage("Masukkan Password Anda!")
+                            .setNegativeButton("Retry", null).create().show();
+                }
+                else {
+                    //jika login gagal
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    builder.setMessage("Username atau Password Anda salah!")
+                            .setNegativeButton("Retry", null).create().show();
                 }
             }
         });

@@ -2,6 +2,7 @@ package com.example.sipeka;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -19,8 +20,8 @@ public class TambahKeluargaActivity extends AppCompatActivity {
     private Button btnPilih, btnCamera;
     private ImageView preview;
     private static final String TAG = TambahActivity.class.getSimpleName();
-    private static int cameraCode = 1;
-    private static int galeryCode = 100;
+    private static final int cameraCode = 1;
+    private static final int galleryCode = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +36,11 @@ public class TambahKeluargaActivity extends AppCompatActivity {
         btnPilih.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentGalery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intentGalery, galeryCode);
+                Intent intentGalery = new Intent(Intent.ACTION_PICK);
+                intentGalery.setType("image/*");
+                String[] mimeTypes = {"image/jpeg", "image/png"};
+                intentGalery.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+                startActivityForResult(intentGalery, galleryCode);
             }
         });
 
@@ -53,9 +57,17 @@ public class TambahKeluargaActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(this.cameraCode == requestCode && resultCode == RESULT_OK){
-            Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-            preview.setImageBitmap(bitmap);
+        if(resultCode == Activity.RESULT_OK){
+            switch (requestCode) {
+                case galleryCode:
+                    Uri imageUri = data.getData();
+                    preview.setImageURI(imageUri);
+                    break;
+                case cameraCode:
+                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                    preview.setImageBitmap(bitmap);
+                    break;
+            }
         }
     }
 

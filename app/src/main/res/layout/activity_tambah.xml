@@ -413,7 +413,7 @@
                 />
 
             <Button
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/btnPilih"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -432,13 +432,13 @@
                 android:layout_marginTop="10dp"/>
 
             <ImageView
-                android:layout_centerHorizontal="true"
                 android:id="@+id/preview"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/btnCamera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="Preview"
+                android:scaleType="fitStart"
                 />
 
             <Button
