@@ -65,7 +65,8 @@ public class TambahKeluargaActivity extends AppCompatActivity {
                     break;
                 case cameraCode:
                     Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                    preview.setImageBitmap(bitmap);
+                    Bitmap bitmapScaled = Bitmap.createScaledBitmap(bitmap, 1366, 768, true);
+                    preview.setImageBitmap(bitmapScaled);
                     break;
             }
         }
