@@ -43,6 +43,16 @@ public class PengaturanActivity extends AppCompatActivity {
                 finish();
             }
         });
+        setDarkMode(getWindow());
+        darkModeSwitch = findViewById(R.id.darkModeSwitch);
+        darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                DarkModePrefManager darkModePrefManager = new DarkModePrefManager(mContext);
+                darkModePrefManager.setDarkMode(!darkModePrefManager.isNightMode());
+                recreate();
+            }
+        }));
 
     }
 
