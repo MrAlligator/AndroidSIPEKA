@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     Button masuk;
     TextView lupa;
     SharedPreferences sharedPreferences;
-    SessionManagement session;
+    //SessionManagement session;
 
     Boolean pwdstatus = true;
     @Override
@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        session = new SessionManagement(getApplicationContext());
+        //session = new SessionManagement(getApplicationContext());
 
         showpass = findViewById(R.id.showpass);
         masuk = findViewById(R.id.button);
@@ -78,6 +78,34 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 razia();
+
+                //String username = mViewUser.getText().toString();
+                //String password = mViewPassword.getText().toString();
+
+                // Check if username, password is filled
+                //if(username.trim().length() > 0 && password.trim().length() > 0){
+                    // For testing puspose username, password is checked with sample data
+                    // username = test
+                    // password = test
+                    //if(username.equals("test") && password.equals("test")){
+
+                        // Creating user login session
+                        // For testing i am stroing name, email as follow
+                        // Use user real data
+                        //session.createLoginSession("Android Hive", "anroidhive@gmail.com");
+
+                        // Staring MainActivity
+                        //Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        //startActivity(i);
+                        //finish();
+
+                    //}else{
+                        //showDialog2();
+                    //}
+                //}else{
+                    //showDialog3();
+                //}
+
             }
         });
 
