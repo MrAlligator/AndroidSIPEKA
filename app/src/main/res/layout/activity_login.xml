@@ -61,18 +61,19 @@
 
             <EditText
                 android:id="@+id/password"
-                android:layout_width="match_parent"
+                android:layout_width="281dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/username"
                 android:layout_alignLeft="@id/username"
-                android:layout_marginTop="15dp"
                 android:layout_alignRight="@id/username"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="26dp"
                 android:hint="@string/prompt_password"
                 android:imeOptions="actionDone"
-                android:maxLength="8"
                 android:inputType="textPassword"
+                android:maxLength="8"
                 android:textColor="#FFFFFF"
-                android:textColorHint="#FFFFFF"/>
+                android:textColorHint="#FFFFFF" />
 
             <cyd.awesome.material.AwesomeText
                 android:id="@+id/showpass"
@@ -80,8 +81,11 @@
                 android:layout_height="25dp"
                 android:layout_below="@+id/logouname"
                 android:layout_alignRight="@+id/password"
+                android:layout_alignParentEnd="true"
                 android:layout_gravity="center"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="33dp"
+                android:layout_marginRight="-29dp"
                 android:gravity="center"
                 android:textColor="#FFFFFF"
                 android:textSize="20dp"
