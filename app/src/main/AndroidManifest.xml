@@ -47,6 +47,16 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme" />
         <activity
+            android:name=".PendudukActivity"
+            android:label="Data Penduduk"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".UbahPasswordActivity"
+            android:label="Ubah Password"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
