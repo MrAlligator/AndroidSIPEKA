@@ -8,7 +8,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,7 +24,7 @@ import cyd.awesome.material.FontCharacterMaps;
 public class LoginActivity extends AppCompatActivity {
 
     AwesomeText showpass;
-    EditText username, password;
+    EditText mViewUser, mViewPassword;
     Button masuk;
     TextView lupa;
     SharedPreferences sharedPreferences;
@@ -32,92 +35,102 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        sharedPreferences = getSharedPreferences("remember", MODE_PRIVATE);
-        if(sharedPreferences.getString("username", "").isEmpty()) {
-
-        } else {
-            Intent login = new Intent(LoginActivity.this, MainActivity.class);
-            login.putExtra("username", sharedPreferences.getString("username", ""));
-            startActivity(login);
-        }
-
         showpass = findViewById(R.id.showpass);
         masuk = findViewById(R.id.button);
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
+        mViewUser = findViewById(R.id.username);
+        mViewPassword = findViewById(R.id.password);
         lupa = findViewById(R.id.lupa);
 
         showpass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (pwdstatus) {
-                    password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    mViewPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     pwdstatus = false;
                     showpass.setMaterialDesignIcon(FontCharacterMaps.MaterialDesign.MD_VISIBILITY);
-                    password.setSelection(password.length());
+                    mViewPassword.setSelection(mViewPassword.length());
                 } else {
-                    password.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+                    mViewPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
                     pwdstatus = true;
                     showpass.setMaterialDesignIcon(FontCharacterMaps.MaterialDesign.MD_VISIBILITY_OFF);
-                    password.setSelection(password.length());
+                    mViewPassword.setSelection(mViewPassword.length());
                 }
+            }
+        });
+
+        mViewPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
+                    razia();
+                    return true;
+                }
+                return false;
             }
         });
 
         masuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String usernameKey = username.getText().toString();
-                String passwordKey = password.getText().toString();
-
-                if (usernameKey.equals("admin") && passwordKey.equals("admin")){
-                    //Session
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("username",usernameKey);
-                    editor.commit();
-                    //End Session
-                    //jika login berhasil
-                    Toast.makeText(getApplicationContext(), "Login Berhasil",
-                            Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    LoginActivity.this.startActivity(intent);
-                    finish();
-                }
-                else if(usernameKey.isEmpty() && passwordKey.isEmpty()){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                    builder.setMessage("Username dan Password tidak boleh Kosong!")
-                            .setNegativeButton("Retry", null).create().show();
-                }
-                else if(usernameKey.isEmpty()){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                    builder.setMessage("Masukkan Username Anda!")
-                            .setNegativeButton("Retry", null).create().show();
-                }
-                else if(passwordKey.isEmpty()){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                    builder.setMessage("Masukkan Password Anda!")
-                            .setNegativeButton("Retry", null).create().show();
-                }
-                else {
-                    //jika login gagal
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                    builder.setMessage("Username atau Password Anda salah!")
-                            .setNegativeButton("Retry", null).create().show();
-                }
-            }
-        });
-
-        lupa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+                razia();
             }
         });
     }
 
     @Override
-    public void onBackPressed(){
+    protected void onStart() {
+        super.onStart();
+        if (Preferences.getLoggedInStatus(getBaseContext())){
+            startActivity(new Intent(getBaseContext(),MainActivity.class));
+            finish();
+        }
+    }
 
+    private void razia(){
+        mViewUser.setError(null);
+        mViewPassword.setError(null);
+        View fokus = null;
+        boolean cancel = false;
+
+        String user = mViewUser.getText().toString();
+        String password = mViewPassword.getText().toString();
+
+        if (TextUtils.isEmpty(user)){
+            mViewUser.setError("This field is required");
+            fokus = mViewUser;
+            cancel = true;
+        }else if(!cekUser(user)){
+            mViewUser.setError("This Username is not found");
+            fokus = mViewUser;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(password)){
+            mViewPassword.setError("This field is required");
+            fokus = mViewPassword;
+            cancel = true;
+        }else if (!cekPassword(password)){
+            mViewPassword.setError("This password is incorrect");
+            fokus = mViewPassword;
+            cancel = true;
+        }
+
+        if (cancel) fokus.requestFocus();
+        else masuk();
+    }
+
+    private void masuk(){
+        Preferences.setLoggedInUser(getBaseContext(),Preferences.getRegisteredUser(getBaseContext()));
+        Preferences.setLoggedInStatus(getBaseContext(),true);
+        startActivity(new Intent(getBaseContext(),MainActivity.class));finish();
+    }
+
+    private boolean cekPassword(String password){
+        return password.equals(Preferences.getRegisteredPass(getBaseContext()));
+    }
+
+    private boolean cekUser(String user){
+        return user.equals(Preferences.getRegisteredUser(getBaseContext()));
     }
 
 }
