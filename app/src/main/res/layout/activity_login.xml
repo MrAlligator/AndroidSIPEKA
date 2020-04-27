@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#778899"
+    android:background="@drawable/background1"
     tools:context=".LoginActivity">
 
     <ScrollView
@@ -21,7 +21,7 @@
                 android:layout_height="165dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="80dp"
-                android:src="@drawable/logo_hitam" />
+                android:src="@drawable/logo_putih" />
 
             <ImageView
                 android:id="@+id/logouname"
@@ -93,6 +93,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Masuk"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/custom_button"
                 android:layout_below="@id/password"
                 android:layout_marginTop="40dp"
                 android:layout_centerHorizontal="true"/>
