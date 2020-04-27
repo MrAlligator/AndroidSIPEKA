@@ -10,16 +10,22 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
     ImageView menu1, menu2, menu3, menu4, menu5, menu6, logout;
     TextView penduduk, keluarga, domisili, grafik, pengaturan, about;
+    SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        session = new SessionManagement(getApplicationContext());
 
         menu1 = findViewById(R.id.menu1);
         menu2 = findViewById(R.id.menu2);
@@ -35,15 +41,17 @@ public class MainActivity extends AppCompatActivity {
         pengaturan = findViewById(R.id.pengaturan);
         about = findViewById(R.id.about);
 
+        Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
+
+        session.checkLogin();
+
+        // get user data from session
+        HashMap<String, String> user = session.getUserDetails();
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences=getSharedPreferences("remember",MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.commit();
-
-                finish();
+                session.logoutUser();
             }
         });
         menu1.setOnClickListener(new View.OnClickListener() {

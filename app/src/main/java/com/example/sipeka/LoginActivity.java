@@ -3,6 +3,7 @@ package com.example.sipeka;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     Button masuk;
     TextView lupa;
     SharedPreferences sharedPreferences;
+    SessionManagement session;
 
     Boolean pwdstatus = true;
     @Override
@@ -35,11 +37,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        session = new SessionManagement(getApplicationContext());
+
         showpass = findViewById(R.id.showpass);
         masuk = findViewById(R.id.button);
         mViewUser = findViewById(R.id.username);
         mViewPassword = findViewById(R.id.password);
         lupa = findViewById(R.id.lupa);
+
+        Toast.makeText(getApplicationContext(), "User Login Status : " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
 
         showpass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,79 +64,91 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mViewPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
-                    razia();
-                    return true;
-                }
-                return false;
-            }
-        });
-
         masuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                razia();
+                String username = mViewUser.getText().toString();
+                String password = mViewPassword.getText().toString();
+
+                if(username.trim().length() > 0 && password.trim().length() > 0){
+
+                    if(username.equals("admin") && password.equals("admin")){
+
+                        session.createLoginSession("Android Hive", "anroidhive@gmail.com");
+
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(i);
+                        finish();
+
+                    }else{
+                        showDialog2();
+                    }
+                }else{
+                    showDialog3();
+                }
             }
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (Preferences.getLoggedInStatus(getBaseContext())){
-            startActivity(new Intent(getBaseContext(),MainActivity.class));
-            finish();
-        }
+    private void showDialog3(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+
+        alertDialogBuilder
+                .setMessage("Username dan Password tidak boleh kosong")
+                .setIcon(R.mipmap.ic_launcher)
+                .setCancelable(false)
+                .setNegativeButton("OK",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        alertDialog.show();
     }
 
-    private void razia(){
-        mViewUser.setError(null);
-        mViewPassword.setError(null);
-        View fokus = null;
-        boolean cancel = false;
+    private void showDialog2(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
 
-        String user = mViewUser.getText().toString();
-        String password = mViewPassword.getText().toString();
-
-        if (TextUtils.isEmpty(user)){
-            mViewUser.setError("This field is required");
-            fokus = mViewUser;
-            cancel = true;
-        }else if(!cekUser(user)){
-            mViewUser.setError("This Username is not found");
-            fokus = mViewUser;
-            cancel = true;
-        }
-
-        if (TextUtils.isEmpty(password)){
-            mViewPassword.setError("This field is required");
-            fokus = mViewPassword;
-            cancel = true;
-        }else if (!cekPassword(password)){
-            mViewPassword.setError("This password is incorrect");
-            fokus = mViewPassword;
-            cancel = true;
-        }
-
-        if (cancel) fokus.requestFocus();
-        else masuk();
+        alertDialogBuilder
+                .setMessage("Username atau Password Salah")
+                .setIcon(R.mipmap.ic_launcher)
+                .setCancelable(false)
+                .setNegativeButton("OK",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
-    private void masuk(){
-        Preferences.setLoggedInUser(getBaseContext(),Preferences.getRegisteredUser(getBaseContext()));
-        Preferences.setLoggedInStatus(getBaseContext(),true);
-        startActivity(new Intent(getBaseContext(),MainActivity.class));finish();
-    }
+    private void showDialog(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
 
-    private boolean cekPassword(String password){
-        return password.equals(Preferences.getRegisteredPass(getBaseContext()));
-    }
+        alertDialogBuilder.setTitle("Keluar dari aplikasi?");
 
-    private boolean cekUser(String user){
-        return user.equals(Preferences.getRegisteredUser(getBaseContext()));
+        alertDialogBuilder
+                .setMessage("Klik Ya untuk keluar!")
+                .setIcon(R.mipmap.ic_launcher)
+                .setCancelable(false)
+                .setPositiveButton("Ya",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        LoginActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("Tidak",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
 }
