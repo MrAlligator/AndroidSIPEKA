@@ -7,4 +7,27 @@
     tools:context=".AboutActivity"
     android:background="@color/contentBodyColor">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/logo_hitam" />
+
+    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:text="SIPEKA adalah Sistem Informasi Pencatatan
+        Kependudukan yang berfungsi untuk mencatat
+        data data kependudukan"
+        />
+
+    </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
