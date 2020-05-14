@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sipeka">
-    
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -14,11 +14,12 @@
         android:roundIcon="@drawable/logo_hitam"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".LihatPenduduk"></activity>
         <activity
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".KeluargaActivity"
+            android:name=".TambahKeluargaActivity"
             android:label="Tambah Keluarga"
-            android:name=".TambahKeluargaActivity"/>
+            android:parentActivityName=".KeluargaActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".TambahActivity"
             android:label="Tambah Penduduk"
@@ -41,11 +42,6 @@
         <activity
             android:name=".KeluargaActivity"
             android:label="Data Keluarga"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".PendudukActivity"
-            android:label="Data Penduduk"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme" />
         <activity
