@@ -1,9 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LihatPenduduk">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nomor Induk Kependudukan"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                />
+
+            <EditText
+                android:id="@+id/txtNIK"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/textView1"
+                android:layout_alignLeft="@id/textView1"
+                android:layout_below="@id/textView1"
+                android:inputType="number"
+                android:layout_marginTop="10dp"
+                />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nama"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_below="@id/txtNIK"
+                android:layout_marginTop="10dp"
+                android:layout_alignLeft="@id/textView1"
+                android:layout_alignRight="@+id/textView1"
+                />
+
+            <EditText
+                android:id="@+id/txtNama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/textView1"
+                android:layout_alignLeft="@id/textView1"
+                android:layout_below="@id/textView2"
+                android:layout_marginTop="10dp"
+                android:inputType="textCapWords"
+                />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tempat Lahir"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_below="@id/txtNama"
+                android:layout_marginTop="10dp"
+                android:layout_alignLeft="@id/textView1"
+                android:layout_alignRight="@+id/textView1"
+                />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
