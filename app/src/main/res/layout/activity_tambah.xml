@@ -41,13 +41,37 @@
                 />
 
             <TextView
+                android:id="@+id/textView00"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nomor Kartu Keluarga"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_below="@id/txtNIK"
+                android:layout_marginTop="10dp"
+                android:layout_alignLeft="@id/textView1"
+                android:layout_alignRight="@+id/textView1"
+                />
+
+            <EditText
+                android:id="@+id/txtNoKK"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/textView1"
+                android:layout_alignLeft="@id/textView1"
+                android:layout_below="@id/textView00"
+                android:layout_marginTop="10dp"
+                android:inputType="textCapWords"
+                />
+
+            <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nama"
                 android:textColor="#000000"
                 android:textSize="14sp"
-                android:layout_below="@id/txtNIK"
+                android:layout_below="@id/txtNoKK"
                 android:layout_marginTop="10dp"
                 android:layout_alignLeft="@id/textView1"
                 android:layout_alignRight="@+id/textView1"
@@ -188,7 +212,7 @@
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="RT"
+                android:text="RT RW"
                 android:textColor="#000000"
                 android:textSize="14sp"
                 android:layout_below="@id/txtAlamat"
@@ -204,33 +228,36 @@
                 android:layout_alignLeft="@id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/RT"
                 >
             </Spinner>
-
-            <TextView
-                android:id="@+id/textView9"
+            
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="RW"
-                android:textColor="#000000"
-                android:textSize="14sp"
-                android:layout_below="@id/txtRT"
-                android:layout_marginTop="10dp"
-                android:layout_alignLeft="@id/textView1"
-                android:layout_alignRight="@+id/textView1"
-                />
+                android:id="@+id/Line1"
+                android:orientation="horizontal"
+                android:layout_below="@id/txtRT">
 
-            <Spinner
-                android:layout_below="@+id/textView9"
-                android:id="@+id/txtRW"
-                android:layout_alignRight="@id/textView1"
-                android:layout_alignLeft="@id/textView1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:entries="@array/RW"
-                >
-            </Spinner>
+                <EditText
+                    android:layout_width="136dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtRT1"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="25dp"
+                    android:enabled="false"
+                    />
+                <EditText
+                    android:layout_width="136dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtRT2"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="25dp"
+                    android:enabled="false"
+                    />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textView10"
@@ -239,7 +266,7 @@
                 android:text="Kelurahan"
                 android:textColor="#000000"
                 android:textSize="14sp"
-                android:layout_below="@id/txtRW"
+                android:layout_below="@id/Line1"
                 android:layout_marginTop="10dp"
                 android:layout_alignLeft="@id/textView1"
                 android:layout_alignRight="@+id/textView1"
@@ -411,10 +438,11 @@
                 android:layout_marginTop="10dp"
                 android:layout_alignLeft="@id/textView1"
                 android:layout_alignRight="@+id/textView1"
+                android:visibility="gone"
                 />
 
             <Button
-                android:visibility="visible"
+                android:visibility="gone"
                 android:id="@+id/btnPilih"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -424,6 +452,7 @@
                 android:layout_marginTop="10dp"/>
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/btnCamera"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -433,6 +462,7 @@
                 android:layout_marginTop="10dp"/>
 
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/preview"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/btnCamera"

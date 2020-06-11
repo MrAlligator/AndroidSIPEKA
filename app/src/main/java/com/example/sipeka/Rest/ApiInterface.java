@@ -51,8 +51,7 @@ public interface ApiInterface {
                                 @Field("statusPerkawinan") String statusPerkawinan,
                                 @Field("pekerjaan") String pekerjaan,
                                 @Field("kewarganegaraan") String kewarganegaraan,
-                                @Field("berlakuHingga") String berlakuHingga,
-                                @Field("gambar_ktp") String gambar_ktp);
+                                @Field("berlakuHingga") String berlakuHingga);
     @FormUrlEncoded
     @PUT("ktp_android")
     Call<PostPutDelKtp> putKtp(@Field("nik") String nik,
