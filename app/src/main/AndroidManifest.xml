@@ -44,11 +44,11 @@
             android:label="Data Keluarga"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".PendudukActivity"
-            android:label="Data Penduduk"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme" />
+<!--        <activity-->
+<!--            android:name=".PendudukActivity"-->
+<!--            android:label="Data Penduduk"-->
+<!--            android:parentActivityName=".MainActivity"-->
+<!--            android:theme="@style/AppTheme" />-->
         <activity
             android:name=".UbahPasswordActivity"
             android:label="Ubah Password"
@@ -58,8 +58,8 @@
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".PendudukActivity"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

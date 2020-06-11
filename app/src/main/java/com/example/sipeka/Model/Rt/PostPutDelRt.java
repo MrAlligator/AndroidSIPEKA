@@ -1,14 +1,12 @@
-package com.example.sipeka.Model;
+package com.example.sipeka.Model.Rt;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class GetKontak {
+public class PostPutDelRt {
     @SerializedName("status")
     String status;
     @SerializedName("result")
-    List<Kontak> listDataKontak;
+    Rt mRt;
     @SerializedName("message")
     String message;
     public String getStatus() {
@@ -23,10 +21,9 @@ public class GetKontak {
     public void setMessage(String message) {
         this.message = message;
     }
-    public List<Kontak> getListDataKontak() {
-        return listDataKontak;
+    public Rt getKontak() {
+        return mRt;
     }
-    public void setListDataKontak(List<Kontak> listDataKontak) {
-        this.listDataKontak = listDataKontak;
+    public void setKontak(Rt Rt) { mRt = Rt;
     }
 }

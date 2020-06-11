@@ -10,9 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.sipeka.Adapter.KontakAdapter;
-import com.example.sipeka.Model.GetKontak;
-import com.example.sipeka.Model.Kontak;
+import com.example.sipeka.Adapter.KtpAdapter;
+import com.example.sipeka.Model.Ktp.GetKtp;
+import com.example.sipeka.Model.Ktp.Ktp;
 import com.example.sipeka.Rest.ApiClient;
 import com.example.sipeka.Rest.ApiInterface;
 
@@ -57,20 +57,20 @@ public class PendudukActivity extends AppCompatActivity {
     }
 
     public void refresh() {
-        Call<GetKontak> kontakCall = mApiInterface.getKontak();
-        kontakCall.enqueue(new Callback<GetKontak>() {
+        Call<GetKtp> KtpCall = mApiInterface.getKtp();
+        KtpCall.enqueue(new Callback<GetKtp>() {
             @Override
-            public void onResponse(Call<GetKontak> call, Response<GetKontak>
+            public void onResponse(Call<GetKtp> call, Response<GetKtp>
                     response) {
-                List<Kontak> KontakList = response.body().getListDataKontak();
-                Log.d("Retrofit Get", "Jumlah data Kontak: " +
-                        String.valueOf(KontakList.size()));
-                mAdapter = new KontakAdapter(KontakList);
+                List<Ktp> KtpList = response.body().getListDataKtp();
+                Log.d("Retrofit Get", "Jumlah data Ktp: " +
+                        String.valueOf(KtpList.size()));
+                mAdapter = new KtpAdapter(KtpList);
                 mRecyclerView.setAdapter(mAdapter);
             }
 
             @Override
-            public void onFailure(Call<GetKontak> call, Throwable t) {
+            public void onFailure(Call<GetKtp> call, Throwable t) {
                 Log.e("Retrofit Get", t.toString());
             }
         });
