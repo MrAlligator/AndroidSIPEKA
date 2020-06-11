@@ -14,7 +14,12 @@
         android:roundIcon="@drawable/logo_hitam"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LihatPenduduk"></activity>
+        <activity
+            android:name=".LihatPenduduk"
+            android:label="Detail Penduduk"
+            android:parentActivityName=".PendudukActivity"
+            android:theme="@style/AppTheme">
+        </activity>
         <activity
             android:name=".TambahKeluargaActivity"
             android:label="Tambah Keluarga"
