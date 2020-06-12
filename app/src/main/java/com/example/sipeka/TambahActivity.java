@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,6 +29,10 @@ import com.example.sipeka.Model.Rt.Rt;
 import com.example.sipeka.Rest.ApiClient;
 import com.example.sipeka.Rest.ApiInterface;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,9 +42,14 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.R.layout.simple_spinner_item;
 
 public class TambahActivity extends AppCompatActivity {
-
+    private ArrayList<Rt> goodModelArrayList;
+    private ArrayList<String> playerNames = new ArrayList<String>();
     Context mContext;
     private Button btnPilih, btnCamera, btnSimpan;
     private ImageView preview;
@@ -85,6 +95,8 @@ public class TambahActivity extends AppCompatActivity {
 
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
 
+        fetchJSON();
+
         btnSimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,18 +113,6 @@ public class TambahActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
                     }
                 });
-            }
-        });
-
-        SpKodeRT.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedName = parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
@@ -177,29 +177,80 @@ public class TambahActivity extends AppCompatActivity {
         txtTanggal.setText(sdf.format(calendar.getTime()));
     }
 
-    private void initSpKodeRT(){
-        mApiInterface.getRt().enqueue(new Callback<GetRt>() {
-            @Override
-            public void onResponse(Call<GetRt> call, Response<GetRt> response) {
-                if(response.isSuccessful()) {
-                    List<Rt> Rt = response.body().getListDataRt();
-                    List<String> listSpinner = new ArrayList<String>();
-                    for (int i = 0; i < Rt.size(); i++){
-                        listSpinner.add(Rt.get(i).getKodeRt());
-                    }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_dropdown_item);
-                    SpKodeRT.setAdapter(adapter);
-                } else {
-                    Toast.makeText(mContext, "Gagal mengambil kode RT", Toast.LENGTH_SHORT).show();
+    private void fetchJSON(){
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiClient.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ApiInterface api = retrofit.create(ApiInterface.class);
+
+        Call<String> call = api.getRt();
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.i("Responsestring", response.body().toString());
+                //Toast.makeText()
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        Log.i("onSuccess", response.body().toString());
+
+                        String jsonresponse = response.body().toString();
+                        spinJSON(jsonresponse);
+
+                    } else {
+                        Log.i("onEmptyResponse", "Returned empty response");//Toast.makeText(getContext(),"Nothing returned",Toast.LENGTH_LONG).show();
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<GetRt> call, Throwable t) {
-                Toast.makeText(mContext, "Koneksi Dengan Database Bermasalah", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<String> call, Throwable t) {
+
             }
         });
+    }
+
+    private void spinJSON(String response){
+
+        try {
+
+            JSONObject obj = new JSONObject(response);
+            if(obj.optString("status").equals("true")){
+
+                goodModelArrayList = new ArrayList<>();
+                JSONArray dataArray  = obj.getJSONArray("data");
+
+                for (int i = 0; i < dataArray.length(); i++) {
+
+                    Rt spinnerModel = new Rt();
+                    JSONObject dataobj = dataArray.getJSONObject(i);
+
+                    spinnerModel.setKodeRt(dataobj.getString("name"));
+                    spinnerModel.setRt(dataobj.getString("country"));
+                    spinnerModel.setRw(dataobj.getString("city"));
+
+                    goodModelArrayList.add(spinnerModel);
+
+                }
+
+                for (int i = 0; i < goodModelArrayList.size(); i++){
+                    playerNames.add(goodModelArrayList.get(i).getKodeRt().toString());
+                }
+
+                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(TambahActivity.this, simple_spinner_item, playerNames);
+                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+                SpKodeRT.setAdapter(spinnerArrayAdapter);
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

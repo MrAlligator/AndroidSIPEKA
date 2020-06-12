@@ -4,7 +4,6 @@ package com.example.sipeka.Rest;
 
 import com.example.sipeka.Model.Ktp.GetKtp;
 import com.example.sipeka.Model.Ktp.PostPutDelKtp;
-import com.example.sipeka.Model.Rt.GetRt;
 import com.example.sipeka.Model.Rt.PostPutDelRt;
 
 import retrofit2.Call;
@@ -17,7 +16,7 @@ import retrofit2.http.PUT;
 
 public interface ApiInterface {
     @GET("rt_android")
-    Call<GetRt> getRt();
+    Call<String> getRt();
     @FormUrlEncoded
     @POST("rt_android")
     Call<PostPutDelRt> postRt(@Field("rt") String rt,

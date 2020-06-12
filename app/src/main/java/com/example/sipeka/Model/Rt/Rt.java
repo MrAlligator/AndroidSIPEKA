@@ -10,7 +10,7 @@ public class Rt {
     @SerializedName("rw")
     private String rw;
 
-    public Rt(String id, String rt, String rw) {
+    public Rt() {
         this.kodeRt = kodeRt;
         this.rt = rt;
         this.rw = rw;
