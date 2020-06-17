@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,10 +25,14 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.sipeka.Model.Ktp.PostPutDelKtp;
+import com.example.sipeka.Model.Response.ResponseKabupaten;
+import com.example.sipeka.Model.Response.ResultItem;
 import com.example.sipeka.Model.Rt.GetRt;
 import com.example.sipeka.Model.Rt.Rt;
 import com.example.sipeka.Rest.ApiClient;
 import com.example.sipeka.Rest.ApiInterface;
+import com.example.sipeka.Rest.Spinner.BaseApiService;
+import com.example.sipeka.Rest.Spinner.UtilsApi;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +44,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,8 +66,12 @@ public class TambahActivity extends AppCompatActivity {
     private static final int galleryCode = 100;
     private Calendar calendar;
     private EditText txtTanggal, txtNama, txtNIK, txtNoKK, txtAlamat, txtRT, txtRW, txtPekerjaan, txtBerlaku;
-    private Spinner SpKota, SpJenKel, SpGoldar, SpKodeRT, SpKelurahan, SpKecamatan, SpAgama, SpStatus, SpKewarganegaraan;
+    private Spinner  SpJenKel, SpGoldar, SpKodeRT, SpKelurahan, SpKecamatan, SpAgama, SpStatus, SpKewarganegaraan;
     ApiInterface mApiInterface;
+    @BindView(R.id.txtKota)
+    Spinner SpKota;
+    ProgressDialog loading;
+    BaseApiService mApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +79,12 @@ public class TambahActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tambah);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+        ButterKnife.bind(this);
+        mContext = this;
+        mApiService = UtilsApi.getAPIService();
+
+        initSpinnerKota();
         mContext = this;
         calendar = Calendar.getInstance();
         txtTanggal = findViewById(R.id.txtTanggal);
@@ -251,6 +268,40 @@ public class TambahActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+    
+        
+    private void initSpinnerKota(){
+        loading = ProgressDialog.show(mContext, null, "harap tunggu...", true, false);
+
+        mApiService.getKabkot().enqueue(new Callback<ResponseKabupaten>() {
+            @Override
+            public void onResponse(Call<ResponseKabupaten> call, Response<ResponseKabupaten> response) {
+                if (response.isSuccessful()) {
+                    loading.dismiss();
+                    List<ResultItem> semuadosenItems = response.body().getResult();
+                    List<String> listSpinner = new ArrayList<String>();
+                    for (int i = 0; i < semuadosenItems.size(); i++){
+                        listSpinner.add(semuadosenItems.get(i).getNamaKabkot());
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
+                            android.R.layout.simple_spinner_item, listSpinner);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    SpKota.setAdapter(adapter);
+                } else {
+                    loading.dismiss();
+                    Toast.makeText(mContext, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseKabupaten> call, Throwable t) {
+                loading.dismiss();
+                Toast.makeText(mContext, "BELUM BISA", Toast.LENGTH_SHORT).show();
+            }
+
+        });
     }
 
 }
