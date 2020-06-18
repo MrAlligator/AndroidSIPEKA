@@ -8,6 +8,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface BaseApiService {
-    @GET("rt_android")
+    @GET("api/Rest_kabkot")
     Call<ResponseKabupaten> getKabkot();
 }

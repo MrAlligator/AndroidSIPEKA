@@ -60,8 +60,7 @@ public class PendudukActivity extends AppCompatActivity {
         Call<GetKtp> KtpCall = mApiInterface.getKtp();
         KtpCall.enqueue(new Callback<GetKtp>() {
             @Override
-            public void onResponse(Call<GetKtp> call, Response<GetKtp>
-                    response) {
+            public void onResponse(Call<GetKtp> call, Response<GetKtp> response) {
                 List<Ktp> KtpList = response.body().getListDataKtp();
                 Log.d("Retrofit Get", "Jumlah data Ktp: " +
                         String.valueOf(KtpList.size()));
