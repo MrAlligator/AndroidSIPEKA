@@ -2,7 +2,7 @@ package com.example.sipeka.Model.Response;
 
 import java.util.List;
 
-public class ResponseKabupaten {
+public class ResponseKab {
 	private List<ResultItem> result;
 	private int jsonMember0;
 

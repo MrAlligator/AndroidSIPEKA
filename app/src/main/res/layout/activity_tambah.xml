@@ -107,8 +107,7 @@
                 android:layout_alignRight="@id/textView1"
                 android:layout_alignLeft="@id/textView1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:entries="@array/kota">
+                android:layout_height="wrap_content">
             </Spinner>
 
             <TextView

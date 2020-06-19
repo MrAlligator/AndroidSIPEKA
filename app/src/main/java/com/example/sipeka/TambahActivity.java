@@ -1,21 +1,17 @@
 package com.example.sipeka;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -25,18 +21,12 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.sipeka.Model.Ktp.PostPutDelKtp;
-import com.example.sipeka.Model.Response.ResponseKabupaten;
+import com.example.sipeka.Model.Response.ResponseKab;
 import com.example.sipeka.Model.Response.ResultItem;
-import com.example.sipeka.Model.Rt.GetRt;
-import com.example.sipeka.Model.Rt.Rt;
 import com.example.sipeka.Rest.ApiClient;
 import com.example.sipeka.Rest.ApiInterface;
 import com.example.sipeka.Rest.Spinner.BaseApiService;
 import com.example.sipeka.Rest.Spinner.UtilsApi;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,14 +39,8 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static android.R.layout.simple_spinner_item;
 
 public class TambahActivity extends AppCompatActivity {
-    private ArrayList<Rt> goodModelArrayList;
-    private ArrayList<String> playerNames = new ArrayList<String>();
     Context mContext;
     private Button btnPilih, btnCamera, btnSimpan;
     private ImageView preview;
@@ -84,7 +68,7 @@ public class TambahActivity extends AppCompatActivity {
         mContext = this;
         mApiService = UtilsApi.getAPIService();
 
-        initSpinnerKota();
+        initSpinnerDosen();
         mContext = this;
         calendar = Calendar.getInstance();
         txtTanggal = findViewById(R.id.txtTanggal);
@@ -112,7 +96,7 @@ public class TambahActivity extends AppCompatActivity {
 
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-        fetchJSON();
+//        fetchJSON();
 
         btnSimpan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,94 +179,95 @@ public class TambahActivity extends AppCompatActivity {
     }
 
 
-    private void fetchJSON(){
+//    private void fetchJSON(){
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(ApiClient.BASE_URL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        ApiInterface api = retrofit.create(ApiInterface.class);
+//
+//        Call<String> call = api.getRt();
+//
+//        call.enqueue(new Callback<String>() {
+//            @Override
+//            public void onResponse(Call<String> call, Response<String> response) {
+//                Log.i("Responsestring", response.body().toString());
+//                //Toast.makeText()
+//                if (response.isSuccessful()) {
+//                    if (response.body() != null) {
+//                        Log.i("onSuccess", response.body().toString());
+//
+//                        String jsonresponse = response.body().toString();
+//                        spinJSON(jsonresponse);
+//
+//                    } else {
+//                        Log.i("onEmptyResponse", "Returned empty response");//Toast.makeText(getContext(),"Nothing returned",Toast.LENGTH_LONG).show();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<String> call, Throwable t) {
+//
+//            }
+//        });
+//    }
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ApiClient.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+//    private void spinJSON(String response){
+//
+//        try {
+//
+//            JSONObject obj = new JSONObject(response);
+//            if(obj.optString("status").equals("true")){
+//
+//                goodModelArrayList = new ArrayList<>();
+//                JSONArray dataArray  = obj.getJSONArray("data");
+//
+//                for (int i = 0; i < dataArray.length(); i++) {
+//
+//                    Rt spinnerModel = new Rt();
+//                    JSONObject dataobj = dataArray.getJSONObject(i);
+//
+//                    spinnerModel.setKodeRt(dataobj.getString("name"));
+//                    spinnerModel.setRt(dataobj.getString("country"));
+//                    spinnerModel.setRw(dataobj.getString("city"));
+//
+//                    goodModelArrayList.add(spinnerModel);
+//
+//                }
+//
+//                for (int i = 0; i < goodModelArrayList.size(); i++){
+//                    playerNames.add(goodModelArrayList.get(i).getKodeRt().toString());
+//                }
+//
+//                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(TambahActivity.this, simple_spinner_item, playerNames);
+//                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+//                SpKodeRT.setAdapter(spinnerArrayAdapter);
+//
+//            }
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
-        ApiInterface api = retrofit.create(ApiInterface.class);
 
-        Call<String> call = api.getRt();
-
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Log.i("Responsestring", response.body().toString());
-                //Toast.makeText()
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        Log.i("onSuccess", response.body().toString());
-
-                        String jsonresponse = response.body().toString();
-                        spinJSON(jsonresponse);
-
-                    } else {
-                        Log.i("onEmptyResponse", "Returned empty response");//Toast.makeText(getContext(),"Nothing returned",Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void spinJSON(String response){
-
-        try {
-
-            JSONObject obj = new JSONObject(response);
-            if(obj.optString("status").equals("true")){
-
-                goodModelArrayList = new ArrayList<>();
-                JSONArray dataArray  = obj.getJSONArray("data");
-
-                for (int i = 0; i < dataArray.length(); i++) {
-
-                    Rt spinnerModel = new Rt();
-                    JSONObject dataobj = dataArray.getJSONObject(i);
-
-                    spinnerModel.setKodeRt(dataobj.getString("name"));
-                    spinnerModel.setRt(dataobj.getString("country"));
-                    spinnerModel.setRw(dataobj.getString("city"));
-
-                    goodModelArrayList.add(spinnerModel);
-
-                }
-
-                for (int i = 0; i < goodModelArrayList.size(); i++){
-                    playerNames.add(goodModelArrayList.get(i).getKodeRt().toString());
-                }
-
-                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(TambahActivity.this, simple_spinner_item, playerNames);
-                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-                SpKodeRT.setAdapter(spinnerArrayAdapter);
-
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
-    
-        
-    private void initSpinnerKota(){
+    private void initSpinnerDosen(){
         loading = ProgressDialog.show(mContext, null, "harap tunggu...", true, false);
 
-        mApiService.getKabkot().enqueue(new Callback<ResponseKabupaten>() {
+        mApiService.getSemuaKabupaten().enqueue(new Callback<ResponseKab>() {
             @Override
-            public void onResponse(Call<ResponseKabupaten> call, Response<ResponseKabupaten> response) {
+            public void onResponse(Call<ResponseKab> call, Response<ResponseKab> response) {
                 if (response.isSuccessful()) {
                     loading.dismiss();
                     List<ResultItem> semuadosenItems = response.body().getResult();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < semuadosenItems.size(); i++){
-                        listSpinner.add(semuadosenItems.get(i).getNamaKabkot());
+                        listSpinner.add(semuadosenItems.get(i).getNama_kabkot());
+//                            tv2.setText(semuadosenItems.get(i).getRw());
                     }
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
@@ -296,7 +281,7 @@ public class TambahActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseKabupaten> call, Throwable t) {
+            public void onFailure(Call<ResponseKab> call, Throwable t) {
                 loading.dismiss();
                 Toast.makeText(mContext, "BELUM BISA", Toast.LENGTH_SHORT).show();
             }

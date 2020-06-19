@@ -1,31 +1,31 @@
 package com.example.sipeka.Model.Response;
 
 public class ResultItem {
-	private String namaKabkot;
-	private String idKabkot;
+	private String id_kabkot;
+	private String nama_kabkot;
 
-	public String getNamaKabkot() {
-		return namaKabkot;
+	public String getId_kabkot() {
+		return id_kabkot;
 	}
 
-	public void setNamaKabkot(String namaKabkot) {
-		this.namaKabkot = namaKabkot;
+	public void setId_kabkot(String id_kabkot) {
+		this.id_kabkot = id_kabkot;
 	}
 
-	public String getIdKabkot() {
-		return idKabkot;
+	public String getNama_kabkot() {
+		return nama_kabkot;
 	}
 
-	public void setIdKabkot(String idKabkot) {
-		this.idKabkot = idKabkot;
+	public void setNama_kabkot(String nama_kabkot) {
+		this.nama_kabkot = nama_kabkot;
 	}
 
 	@Override
- 	public String toString(){
-		return 
-			"ResultItem{" + 
-			"id_kabkot = '" + idKabkot + '\'' +
-			",nama_kabkot = '" + namaKabkot + '\'' +
-			"}";
-		}
+	public String toString(){
+		return
+				"ResultItem{" +
+						"id_kabkot = '" + id_kabkot + '\'' +
+						",nama_kabkot = '" + nama_kabkot + '\'' +
+						"}";
+	}
 }

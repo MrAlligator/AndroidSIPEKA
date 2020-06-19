@@ -4,6 +4,7 @@ package com.example.sipeka.Rest;
 
 import com.example.sipeka.Model.Ktp.GetKtp;
 import com.example.sipeka.Model.Ktp.PostPutDelKtp;
+import com.example.sipeka.Model.Rt.GetRt;
 import com.example.sipeka.Model.Rt.PostPutDelRt;
 
 import retrofit2.Call;
@@ -16,7 +17,7 @@ import retrofit2.http.PUT;
 
 public interface ApiInterface {
     @GET("rt_android")
-    Call<String> getRt();
+    Call<GetRt> getRt();
     @FormUrlEncoded
     @POST("rt_android")
     Call<PostPutDelRt> postRt(@Field("rt") String rt,
@@ -68,9 +69,9 @@ public interface ApiInterface {
                                @Field("statusPerkawinan") String statusPerkawinan,
                                @Field("pekerjaan") String pekerjaan,
                                @Field("kewarganegaraan") String kewarganegaraan,
-                               @Field("berlakuHingga") String berlakuHingga,
-                               @Field("gambar_ktp") String gambar_ktp);
+                               @Field("berlakuHingga") String berlakuHingga);
     @FormUrlEncoded
     @HTTP(method = "DELETE", path = "ktp_android", hasBody = true)
     Call<PostPutDelKtp> deleteKtp(@Field("nik") String nik);
+
 }
