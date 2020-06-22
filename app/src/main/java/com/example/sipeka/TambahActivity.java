@@ -12,7 +12,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -22,7 +24,9 @@ import android.widget.Toast;
 
 import com.example.sipeka.Model.Ktp.PostPutDelKtp;
 import com.example.sipeka.Model.Response.ResponseKab;
+import com.example.sipeka.Model.Response.ResponseKec;
 import com.example.sipeka.Model.Response.ResultItem;
+import com.example.sipeka.Model.Response.ResultItemKec;
 import com.example.sipeka.Rest.ApiClient;
 import com.example.sipeka.Rest.ApiInterface;
 import com.example.sipeka.Rest.Spinner.BaseApiService;
@@ -36,6 +40,11 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import meridianid.farizdotid.actdaerahindonesia.adapter.SuggestionDesaAdapter;
+import meridianid.farizdotid.actdaerahindonesia.adapter.SuggestionKabAdapter;
+import meridianid.farizdotid.actdaerahindonesia.adapter.SuggestionKecAdapter;
+import meridianid.farizdotid.actdaerahindonesia.adapter.SuggestionProvAdapter;
+import meridianid.farizdotid.actdaerahindonesia.util.JsonParse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,7 +59,9 @@ public class TambahActivity extends AppCompatActivity {
     private static final int galleryCode = 100;
     private Calendar calendar;
     private EditText txtTanggal, txtNama, txtNIK, txtNoKK, txtAlamat, txtRT, txtRW, txtPekerjaan, txtBerlaku;
-    private Spinner  SpJenKel, SpGoldar, SpKodeRT, SpKelurahan, SpKecamatan, SpAgama, SpStatus, SpKewarganegaraan;
+    private Spinner  SpJenKel, SpGoldar, SpKodeRT, SpAgama, SpStatus, SpKewarganegaraan;
+    private AutoCompleteTextView ACTVProv, ACTVKab, ACTVKec, ACTVKel;
+    private JsonParse jsonParse;
     ApiInterface mApiInterface;
     @BindView(R.id.txtKota)
     Spinner SpKota;
@@ -67,6 +78,7 @@ public class TambahActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mContext = this;
         mApiService = UtilsApi.getAPIService();
+        jsonParse = new JsonParse(this);
 
         initSpinnerDosen();
         mContext = this;
@@ -88,11 +100,13 @@ public class TambahActivity extends AppCompatActivity {
         SpJenKel = findViewById(R.id.txtJenkel);
         SpGoldar = findViewById(R.id.txtGoldar);
         SpKodeRT = findViewById(R.id.txtRT);
-        SpKelurahan = findViewById(R.id.txtKelurahan);
-        SpKecamatan = findViewById(R.id.txtKecamatan);
         SpAgama = findViewById(R.id.txtAgama);
         SpStatus = findViewById(R.id.txtStatus);
         SpKewarganegaraan = findViewById(R.id.txtKewarganegaraan);
+        ACTVKec = findViewById(R.id.txtKecamatan);
+        ACTVKel = findViewById(R.id.txtKelurahan);
+        ACTVKab = findViewById(R.id.txtKab);
+        ACTVProv = findViewById(R.id.txtProv);
 
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
 
@@ -101,7 +115,7 @@ public class TambahActivity extends AppCompatActivity {
         btnSimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<PostPutDelKtp> postKontakCall = mApiInterface.postKtp(txtNIK.getText().toString(), txtNoKK.getText().toString(), txtNama.getText().toString(), SpKota.getSelectedItem().toString(), txtTanggal.getText().toString(), SpJenKel.getSelectedItem().toString(), SpGoldar.getSelectedItem().toString(), txtAlamat.getText().toString(), SpKodeRT.getSelectedItem().toString(), SpKelurahan.getSelectedItem().toString(), SpKecamatan.getSelectedItem().toString(), SpAgama.getSelectedItem().toString(), SpStatus.getSelectedItem().toString(), txtPekerjaan.getText().toString(), SpKewarganegaraan.getSelectedItem().toString(), txtBerlaku.getText().toString());
+                Call<PostPutDelKtp> postKontakCall = mApiInterface.postKtp(txtNIK.getText().toString(), txtNoKK.getText().toString(), txtNama.getText().toString(), SpKota.getSelectedItem().toString(), txtTanggal.getText().toString(), SpJenKel.getSelectedItem().toString(), SpGoldar.getSelectedItem().toString(), txtAlamat.getText().toString(), SpKodeRT.getSelectedItem().toString(), ACTVKel.getText().toString(), ACTVKec.getText().toString(), SpAgama.getSelectedItem().toString(), SpStatus.getSelectedItem().toString(), txtPekerjaan.getText().toString(), SpKewarganegaraan.getSelectedItem().toString(), txtBerlaku.getText().toString());
                 postKontakCall.enqueue(new Callback<PostPutDelKtp>() {
                     @Override
                     public void onResponse(Call<PostPutDelKtp> call, Response<PostPutDelKtp> response) {
@@ -150,6 +164,47 @@ public class TambahActivity extends AppCompatActivity {
                 new DatePickerDialog(TambahActivity.this, date,
                         calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+        ACTVProv.setAdapter(new SuggestionProvAdapter(this, ACTVProv.getText().toString()));
+        ACTVProv.setThreshold(1);
+        ACTVProv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String namaProv = parent.getItemAtPosition(position).toString();
+                jsonParse.searchIdProv(namaProv);
+            }
+        });
+
+        ACTVKab.setAdapter(new SuggestionKabAdapter(this, ACTVProv.getText().toString(),
+                ACTVKab.getText().toString()));
+        ACTVKab.setThreshold(1);
+        ACTVKab.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String namaKab = parent.getItemAtPosition(position).toString();
+                jsonParse.searchIdKab(namaKab);
+            }
+        });
+
+        ACTVKec.setAdapter(new SuggestionKecAdapter(this, ACTVKab.getText().toString(),
+                ACTVKec.getText().toString()));
+        ACTVKec.setThreshold(1);
+        ACTVKec.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String namaKec = parent.getItemAtPosition(position).toString();
+                jsonParse.searchIdKec(namaKec);
+            }
+        });
+
+        ACTVKel.setAdapter(new SuggestionDesaAdapter(this, ACTVKec.getText().toString(),
+                ACTVKel.getText().toString()));
+        ACTVKel.setThreshold(1);
+        ACTVKel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
             }
         });
     }

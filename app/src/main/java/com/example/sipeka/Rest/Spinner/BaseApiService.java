@@ -8,4 +8,7 @@ import retrofit2.http.GET;
 public interface BaseApiService {
     @GET("kabkot_android")
     Call<ResponseKab> getSemuaKabupaten();
+
+    @GET("kec_android")
+    Call<ResponseKab> getSemuaKecamatan();
 }

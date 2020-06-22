@@ -20,13 +20,75 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <TextView
+                android:id="@+id/textView01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Asal Kartu Tanda Penduduk"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                />
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/Line2"
+                android:layout_below="@+id/textView01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Prov"
+                    android:text="Provinsi"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    />
+                <AutoCompleteTextView
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtProv"
+                    android:layout_marginTop="10dp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/Line3"
+                android:layout_below="@+id/Line2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Kab"
+                    android:text="Kabupaten"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    />
+                <AutoCompleteTextView
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtKab"
+                    android:layout_marginTop="10dp"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_below="@id/Line3"
                 android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nomor Induk Kependudukan"
                 android:textColor="#000000"
                 android:textSize="14sp"
+                android:layout_marginTop="10dp"
                 />
 
             <EditText
@@ -271,16 +333,14 @@
                 android:layout_alignRight="@+id/textView1"
                 />
 
-            <Spinner
+            <AutoCompleteTextView
                 android:layout_below="@+id/textView10"
                 android:id="@+id/txtKelurahan"
                 android:layout_alignRight="@id/textView1"
                 android:layout_alignLeft="@id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/kelurahan"
-                >
-            </Spinner>
+                />
 
             <TextView
                 android:id="@+id/textView11"
@@ -295,16 +355,14 @@
                 android:layout_alignRight="@+id/textView1"
                 />
 
-            <Spinner
+            <AutoCompleteTextView
                 android:layout_below="@+id/textView11"
                 android:id="@+id/txtKecamatan"
                 android:layout_alignRight="@id/textView1"
                 android:layout_alignLeft="@id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/kecamatan"
-                >
-            </Spinner>
+                />
 
             <TextView
                 android:id="@+id/textView12"

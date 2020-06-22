@@ -3,6 +3,8 @@ package com.example.sipeka.Model.Response;
 public class ResultItem {
 	private String id_kabkot;
 	private String nama_kabkot;
+	private String id_kec;
+	private String nama_kec;
 
 	public String getId_kabkot() {
 		return id_kabkot;
