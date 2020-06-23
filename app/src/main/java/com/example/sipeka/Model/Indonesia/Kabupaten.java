@@ -6,9 +6,6 @@ public class Kabupaten {
     String province_id;
     String name;
 
-    public Kabupaten() {
-    }
-
     public Kabupaten(String id, String province_id, String name) {
         this.id = id;
         this.province_id = province_id;

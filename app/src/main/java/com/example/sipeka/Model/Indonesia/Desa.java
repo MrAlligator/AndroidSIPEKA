@@ -6,10 +6,6 @@ public class Desa {
     String district_id;
     String name;
 
-    public Desa(){
-
-    }
-
     public Desa(String id, String district_id, String name) {
         this.id = id;
         this.district_id = district_id;

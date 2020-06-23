@@ -5,9 +5,6 @@ public class Provinsi {
     String id;
     String name;
 
-    public Provinsi() {
-    }
-
     public Provinsi(String id, String name) {
         this.id = id;
         this.name = name;

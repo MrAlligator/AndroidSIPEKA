@@ -6,9 +6,6 @@ public class Kecamatan {
     String regency_id;
     String name;
 
-    public Kecamatan() {
-    }
-
     public Kecamatan(String id, String regency_id, String name) {
         this.id = id;
         this.regency_id = regency_id;
