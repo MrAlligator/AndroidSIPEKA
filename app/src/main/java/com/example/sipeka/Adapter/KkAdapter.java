@@ -17,12 +17,12 @@ import java.util.List;
 public class KkAdapter {
     List<Kk> mKkList;
 
-    public KkAdapter(List <Kk> KtpList) {
+    public KkAdapter(List <Kk> KkList) {
         mKkList = KkList;
     }
 
     @Override
-    public KtpAdapter.MyViewHolder onCreateViewHolder (ViewGroup parent, int viewType){
+    public KkAdapter.MyViewHolder onCreateViewHolder (ViewGroup parent, int viewType){
         View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.ktp_list, parent, false);
         KkAdapter.MyViewHolder mViewHolder = new KkAdapter.MyViewHolder(mView);
         return mViewHolder;

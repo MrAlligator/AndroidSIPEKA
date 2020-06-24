@@ -2,6 +2,8 @@ package com.example.sipeka.Rest;
 
 
 
+import com.example.sipeka.Model.Kk.GetKk;
+import com.example.sipeka.Model.Kk.PostPutDelKk;
 import com.example.sipeka.Model.Ktp.GetKtp;
 import com.example.sipeka.Model.Ktp.PostPutDelKtp;
 import com.example.sipeka.Model.Rt.GetRt;
@@ -73,5 +75,38 @@ public interface ApiInterface {
     @FormUrlEncoded
     @HTTP(method = "DELETE", path = "ktp_android", hasBody = true)
     Call<PostPutDelKtp> deleteKtp(@Field("nik") String nik);
+
+    @GET("keluarga_android")
+    Call<GetKk> getKk();
+
+    @FormUrlEncoded
+    @POST("keluarga_android")
+    Call<PostPutDelKk> postKk(@Field("noKk") String noKk,
+                             @Field("namaKk") String namaKk,
+                             @Field("alamat") String alamat,
+                             @Field("kelurahan") String kelurahan,
+                             @Field("kecamatan") String kecamatan,
+                             @Field("kabupaten") String kabupaten,
+                             @Field("kodePos") String kodePos,
+                             @Field("provinsi") String provinsi,
+                             @Field("dikeluarkanTanggal") String dikeluarkanTanggal,
+                             @Field("kodeRt") String kodeRt);
+
+    @FormUrlEncoded
+    @PUT("keluarga_android")
+    Call<PostPutDelKk> putKk(@Field("noKk") String noKk,
+                             @Field("namaKk") String namaKk,
+                             @Field("alamat") String alamat,
+                             @Field("kelurahan") String kelurahan,
+                             @Field("kecamatan") String kecamatan,
+                             @Field("kabupaten") String kabupaten,
+                             @Field("kodePos") String kodePos,
+                             @Field("provinsi") String provinsi,
+                             @Field("dikeluarkanTanggal") String dikeluarkanTanggal,
+                             @Field("kodeRt") String kodeRt);
+
+    @FormUrlEncoded
+    @HTTP(method = "DELETE", path = "keluarga_android", hasBody = true)
+    Call<PostPutDelKk> deleteKk(@Field("noKk") String noKk);
 
 }

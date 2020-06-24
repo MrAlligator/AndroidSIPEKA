@@ -24,7 +24,7 @@ import retrofit2.Response;
 
 public class PendudukActivity extends AppCompatActivity {
 
-    private Button buat;
+    private Button buat, lihat;
     ApiInterface mApiInterface;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -44,6 +44,14 @@ public class PendudukActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(PendudukActivity.this, TambahActivity.class));
+            }
+        });
+
+        lihat = findViewById(R.id.btnKeluarga);
+        lihat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PendudukActivity.this, KeluargaActivity.class));
             }
         });
 

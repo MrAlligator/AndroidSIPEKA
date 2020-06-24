@@ -22,6 +22,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.sipeka.Adapter.Indonesia.SuggestionDesaAdapter;
+import com.example.sipeka.Adapter.Indonesia.SuggestionKabAdapter;
+import com.example.sipeka.Adapter.Indonesia.SuggestionKecAdapter;
+import com.example.sipeka.Adapter.Indonesia.SuggestionProvAdapter;
 import com.example.sipeka.Model.Ktp.PostPutDelKtp;
 import com.example.sipeka.Model.Response.ResponseKab;
 import com.example.sipeka.Model.Response.ResponseKec;
@@ -31,6 +35,7 @@ import com.example.sipeka.Rest.ApiClient;
 import com.example.sipeka.Rest.ApiInterface;
 import com.example.sipeka.Rest.Spinner.BaseApiService;
 import com.example.sipeka.Rest.Spinner.UtilsApi;
+import com.example.sipeka.Util.JsonParse;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,11 +45,6 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import meridianid.farizdotid.actdaerahindonesia.adapter.SuggestionDesaAdapter;
-import meridianid.farizdotid.actdaerahindonesia.adapter.SuggestionKabAdapter;
-import meridianid.farizdotid.actdaerahindonesia.adapter.SuggestionKecAdapter;
-import meridianid.farizdotid.actdaerahindonesia.adapter.SuggestionProvAdapter;
-import meridianid.farizdotid.actdaerahindonesia.util.JsonParse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -80,7 +80,7 @@ public class TambahActivity extends AppCompatActivity {
         mApiService = UtilsApi.getAPIService();
         jsonParse = new JsonParse(this);
 
-        initSpinnerDosen();
+//        initSpinnerDosen();
         mContext = this;
         calendar = Calendar.getInstance();
         txtTanggal = findViewById(R.id.txtTanggal);
@@ -310,38 +310,38 @@ public class TambahActivity extends AppCompatActivity {
 //    }
 
 
-    private void initSpinnerDosen(){
-        loading = ProgressDialog.show(mContext, null, "harap tunggu...", true, false);
-
-        mApiService.getSemuaKabupaten().enqueue(new Callback<ResponseKab>() {
-            @Override
-            public void onResponse(Call<ResponseKab> call, Response<ResponseKab> response) {
-                if (response.isSuccessful()) {
-                    loading.dismiss();
-                    List<ResultItem> semuadosenItems = response.body().getResult();
-                    List<String> listSpinner = new ArrayList<String>();
-                    for (int i = 0; i < semuadosenItems.size(); i++){
-                        listSpinner.add(semuadosenItems.get(i).getNama_kabkot());
+//    private void initSpinnerDosen(){
+//        loading = ProgressDialog.show(mContext, null, "harap tunggu...", true, false);
+//
+//        mApiService.getSemuaKabupaten().enqueue(new Callback<ResponseKab>() {
+//            @Override
+//            public void onResponse(Call<ResponseKab> call, Response<ResponseKab> response) {
+//                if (response.isSuccessful()) {
+//                    loading.dismiss();
+//                    List<ResultItem> semuadosenItems = response.body().getResult();
+//                    List<String> listSpinner = new ArrayList<String>();
+//                    for (int i = 0; i < semuadosenItems.size(); i++){
+//                        listSpinner.add(semuadosenItems.get(i).getNama_kabkot());
 //                            tv2.setText(semuadosenItems.get(i).getRw());
-                    }
-
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
-                            android.R.layout.simple_spinner_item, listSpinner);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    SpKota.setAdapter(adapter);
-                } else {
-                    loading.dismiss();
-                    Toast.makeText(mContext, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseKab> call, Throwable t) {
-                loading.dismiss();
-                Toast.makeText(mContext, "BELUM BISA", Toast.LENGTH_SHORT).show();
-            }
-
-        });
-    }
+//                    }
+//
+//                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
+//                            android.R.layout.simple_spinner_item, listSpinner);
+//                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                    SpKota.setAdapter(adapter);
+//                } else {
+//                    loading.dismiss();
+//                    Toast.makeText(mContext, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseKab> call, Throwable t) {
+//                loading.dismiss();
+//                Toast.makeText(mContext, "BELUM BISA", Toast.LENGTH_SHORT).show();
+//            }
+//
+//        });
+//    }
 
 }
