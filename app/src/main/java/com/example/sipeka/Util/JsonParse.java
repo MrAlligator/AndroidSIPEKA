@@ -3,6 +3,7 @@ package com.example.sipeka.Util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.StrictMode;
+import android.widget.Toast;
 
 import com.example.sipeka.Model.Indonesia.Desa;
 import com.example.sipeka.Model.Indonesia.Kabupaten;
@@ -37,18 +38,18 @@ public class JsonParse {
         List<Provinsi> listProv = new ArrayList<Provinsi>();
         try {
             String temp = sName.replace(" ", "%20");
-            URL urlAPI = new URL("https://192.168.1.14/kelompok_5/prov_android?name="+temp);
+            URL urlAPI = new URL("http://192.168.1.14/kelompok_5/prov_android/provinces?name="+temp);
             URLConnection urlConnection = urlAPI.openConnection();
             BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             String line = reader.readLine();
             JSONObject jsonResponse = new JSONObject(line);
-            if (jsonResponse.isNull("provinsi")){
+            if (jsonResponse.isNull("province")){
 
             } else {
-                JSONArray jsonArray = jsonResponse.getJSONArray("provinsi");
+                JSONArray jsonArray = jsonResponse.getJSONArray("provinces");
                 for (int i = 0; i < jsonArray.length(); i++){
                     JSONObject result = jsonArray.getJSONObject(i);
-                    listProv.add(new Provinsi(result.getString("id"), result.getString("name")));
+                    listProv.add(new Provinsi(result.getString("name"), result.getString("name")));
                 }
             }
         } catch (Exception e1){
@@ -65,16 +66,16 @@ public class JsonParse {
             StrictMode.setThreadPolicy(policy);
             String tempKab = sNamaKab.replace(" ", "%20");
             String spIdProv = sp.getString(SharedPref.SP_IDPROV, "");
-            URL urlAPI = new URL("https://192.168.1.14/kelompok_5/kabkot_android?name="+spIdProv+
+            URL urlAPI = new URL("http://192.168.1.14/kelompok_5/kabkot_android/regencies?province_id="+spIdProv+
                     "&name="+tempKab);
             URLConnection urlConnection = urlAPI.openConnection();
             BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             String line = reader.readLine();
             JSONObject jsonResponse = new JSONObject(line);
-            if (jsonResponse.isNull("kabupaten")){
+            if (jsonResponse.isNull("regencies")){
 
             } else {
-                JSONArray jsonArrayKab = jsonResponse.getJSONArray("kabupaten");
+                JSONArray jsonArrayKab = jsonResponse.getJSONArray("regencies");
                 for (int i = 0; i < jsonArrayKab.length(); i++){
                     JSONObject result = jsonArrayKab.getJSONObject(i);
                     listKabupaten.add(new Kabupaten(result.getString("id"), result.getString("province_id"),
@@ -94,8 +95,8 @@ public class JsonParse {
             StrictMode.setThreadPolicy(policy);
             String tempKec = sNamaKec.replace(" ", "%20");
             String spIdKab = sp.getString(SharedPref.SP_IDKAB, "");
-            URL urlAPI = new URL("https://192.168.1.14/kelompok_5/kec_android?name="+spIdKab+
-                    "&name="+tempKec);
+            URL urlAPI = new URL("http://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota="+spIdKab+
+                    "&nama="+tempKec);
             URLConnection urlConnection = urlAPI.openConnection();
             BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             String line = reader.readLine();
@@ -106,8 +107,8 @@ public class JsonParse {
                 JSONArray jsonArrayKec = jsonResponse.getJSONArray("kecamatan");
                 for (int i = 0; i < jsonArrayKec.length(); i++){
                     JSONObject result = jsonArrayKec.getJSONObject(i);
-                    listKecamatan.add(new Kecamatan(result.getString("id"), result.getString("regency_id"),
-                            result.getString("name")));
+                    listKecamatan.add(new Kecamatan(result.getString("id"), result.getString("id_kota"),
+                            result.getString("nama")));
                 }
             }
         } catch (Exception e1){
@@ -123,8 +124,8 @@ public class JsonParse {
             StrictMode.setThreadPolicy(policy);
             String tempDesa = sNamaDesa.replace(" ", "%20");
             String spIdKec = sp.getString(SharedPref.SP_IDKEC, "");
-            URL urlAPI = new URL("https://192.168.1.14/kelompok_5/desa_android?district_id="+spIdKec+
-                    "&name="+tempDesa);
+            URL urlAPI = new URL("http://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan="+spIdKec+
+                    "&nama="+tempDesa);
             URLConnection urlConnection = urlAPI.openConnection();
             BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             String line = reader.readLine();
@@ -135,8 +136,8 @@ public class JsonParse {
                 JSONArray jsonArrayDesa = jsonResponse.getJSONArray("desa");
                 for (int i = 0; i < jsonArrayDesa.length(); i++){
                     JSONObject result = jsonArrayDesa.getJSONObject(i);
-                    listDesa.add(new Desa(result.getString("id"), result.getString("district_id"),
-                            result.getString("name")));
+                    listDesa.add(new Desa(result.getString("id"), result.getString("id_kecamatan"),
+                            result.getString("nama")));
                 }
             }
         } catch (Exception e1){
@@ -151,7 +152,7 @@ public class JsonParse {
             StrictMode.setThreadPolicy(policy);
 
             String tempProv = namaProv.replace(" ", "%20");
-            URL urlAPIProv = new URL("https://192.168.1.14/kelompok_5/prov_android?name=" + tempProv);
+            URL urlAPIProv = new URL("http://dev.farizdotid.com/api/daerahindonesia/provinsi?nama=" + tempProv);
             URLConnection urlConnectionProv = urlAPIProv.openConnection();
             BufferedReader readerProv = new BufferedReader(new InputStreamReader(urlConnectionProv.getInputStream()));
             String lineProv = readerProv.readLine();
@@ -180,16 +181,16 @@ public class JsonParse {
 
             String tempKab = namaKab.replace(" ", "%20");
             String spIdProv = sp.getString(SharedPref.SP_IDPROV, "");
-            URL urlAPIKab = new URL("https://192.168.1.14/kelompok_5/kabkot_android?province_id="+spIdProv+
-                    "&name="+tempKab);
+            URL urlAPIKab = new URL("https://farizdotid.com/api/wilayah_indonesia/get_kabupaten.php?id_prov="+spIdProv+
+                    "&nama_kab="+tempKab);
             URLConnection urlConnectionKab = urlAPIKab.openConnection();
             BufferedReader readerKab = new BufferedReader(new InputStreamReader(urlConnectionKab.getInputStream()));
             String lineKab = readerKab.readLine();
             JSONObject jsonResponseKab = new JSONObject(lineKab);
-            if (jsonResponseKab.isNull("kabupaten")){
+            if (jsonResponseKab.isNull("regencies")){
 
             } else {
-                JSONArray jsonArrayKab = jsonResponseKab.getJSONArray("kabupaten");
+                JSONArray jsonArrayKab = jsonResponseKab.getJSONArray("regencies");
                 for (int i = 0; i < jsonArrayKab.length(); i++) {
                     JSONObject result = jsonArrayKab.getJSONObject(i);
                     id_kab = result.getString("id");
@@ -210,16 +211,16 @@ public class JsonParse {
 
             String tempKec = namaKec.replace(" ", "%20");
             String spIdKab = sp.getString(SharedPref.SP_IDKAB, "");
-            URL urlAPIKec = new URL("https://192.168.1.14/kelompok_5/kec_android?regency_id="+spIdKab+
-                    "&name="+tempKec);
+            URL urlAPIKec = new URL("https://farizdotid.com/api/wilayah_indonesia/get_kecamatan.php?id_kab="+spIdKab+
+                    "&nama_kec="+tempKec);
             URLConnection urlConnectionKec = urlAPIKec.openConnection();
             BufferedReader readerKec = new BufferedReader(new InputStreamReader(urlConnectionKec.getInputStream()));
             String lineKec = readerKec.readLine();
             JSONObject jsonResponseKec = new JSONObject(lineKec);
-            if (jsonResponseKec.isNull("kecamatan")){
+            if (jsonResponseKec.isNull("districts")){
 
             } else {
-                JSONArray jsonArrayKec = jsonResponseKec.getJSONArray("kecamatan");
+                JSONArray jsonArrayKec = jsonResponseKec.getJSONArray("districts");
                 for (int i = 0; i < jsonArrayKec.length(); i++) {
                     JSONObject result = jsonArrayKec.getJSONObject(i);
                     id_kec = result.getString("id");
