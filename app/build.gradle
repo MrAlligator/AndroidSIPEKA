@@ -51,6 +51,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.6.2'
     implementation 'com.squareup.retrofit2:retrofit:2.0.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.0.2'
+//login
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
     //noinspection GradleCompatible
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'cyd.awesome.android:awesome-material:1.0'
