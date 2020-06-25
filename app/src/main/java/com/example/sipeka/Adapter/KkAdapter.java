@@ -21,14 +21,14 @@ public class KkAdapter {
         mKkList = KkList;
     }
 
-    @Override
+//    @Override
     public KkAdapter.MyViewHolder onCreateViewHolder (ViewGroup parent, int viewType){
         View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.ktp_list, parent, false);
         KkAdapter.MyViewHolder mViewHolder = new KkAdapter.MyViewHolder(mView);
         return mViewHolder;
     }
 
-    @Override
+//    @Override
     public void onBindViewHolder (KtpAdapter.MyViewHolder holder, final int position){
         holder.mTextViewId.setText("NIK = " + mKkList.get(position).getNoKk());
         holder.mTextViewNama.setText("Nama = " + mKkList.get(position).getNamaKk());
@@ -44,7 +44,7 @@ public class KkAdapter {
         });
     }
 
-    @Override
+//    @Override
     public int getItemCount() {
         return mKkList.size();
     }

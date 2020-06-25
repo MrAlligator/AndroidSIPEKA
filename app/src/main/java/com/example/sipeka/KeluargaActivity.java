@@ -62,7 +62,7 @@ public class KeluargaActivity extends AppCompatActivity {
             public void onResponse(Call<GetKk> call, Response<GetKk> response) {
                 List<Kk> KkList = response.body().getListDataKk();
                 Log.d("Retrofit Get", "Jumlah data Kk :" + String.valueOf(KkList.size()));
-                mAdapter = new KkAdapter(KkList);
+//                mAdapter = new KkAdapter(KkList);
                 mRecyclerView.setAdapter(mAdapter);
             }
 
