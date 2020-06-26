@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:hint="Nama KK"
             android:textSize="15sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:layout_below="@id/tvNoKk"/>
     </RelativeLayout>
     <View
         android:background="@color/colorPrimary"

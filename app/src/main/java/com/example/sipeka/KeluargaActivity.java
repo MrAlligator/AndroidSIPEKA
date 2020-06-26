@@ -24,14 +24,12 @@ import retrofit2.Response;
 
 public class KeluargaActivity extends AppCompatActivity {
 
-    private Button tambah;
-    private Button buat;
+    private Button tambah, buat;
     ApiInterface mApiInterface;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private KkAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     public static KeluargaActivity ma;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +59,9 @@ public class KeluargaActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetKk> call, Response<GetKk> response) {
                 List<Kk> KkList = response.body().getListDataKk();
-                Log.d("Retrofit Get", "Jumlah data Kk :" + String.valueOf(KkList.size()));
-//                mAdapter = new KkAdapter(KkList);
+                Log.d("Retrofit Get", "Jumlah data Kk :" +
+                        String.valueOf(KkList.size()));
+                mAdapter = new KkAdapter(KkList);
                 mRecyclerView.setAdapter(mAdapter);
             }
 

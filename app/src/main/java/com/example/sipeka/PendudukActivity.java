@@ -35,7 +35,6 @@ public class PendudukActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_penduduk);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         buat = findViewById(R.id.btnTambah);
