@@ -3,6 +3,8 @@ package com.example.sipeka;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -19,8 +22,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sipeka.Rest.Spinner.BaseApiService;
+import com.example.sipeka.Rest.Spinner.UtilsApi;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cyd.awesome.material.AwesomeText;
 import cyd.awesome.material.FontCharacterMaps;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -30,6 +47,13 @@ public class LoginActivity extends AppCompatActivity {
     TextView lupa;
     SharedPreferences sharedPreferences;
     //SessionManagement session;
+    @BindView(R.id.username) EditText etEmail;
+    @BindView(R.id.password) EditText etPassword;
+    @BindView(R.id.button) Button btnLogin;
+    ProgressDialog loading;
+    Context mContext;
+    BaseApiService mApiService;
+
 
     Boolean pwdstatus = true;
     @Override
@@ -40,11 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         //session = new SessionManagement(getApplicationContext());
 
         showpass = findViewById(R.id.showpass);
-        masuk = findViewById(R.id.button);
-        mViewUser = findViewById(R.id.username);
-        mViewPassword = findViewById(R.id.password);
         lupa = findViewById(R.id.lupa);
-
 
         showpass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,52 +83,31 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mViewPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
-                    razia();
-                    return true;
-                }
-                return false;
-            }
-        });
+//        mViewPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
+//                    razia();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
 
-        masuk.setOnClickListener(new View.OnClickListener() {
+        getSupportActionBar().hide();
+
+        ButterKnife.bind(this);
+        mContext = this;
+        mApiService = UtilsApi.getAPIService(); // meng-init yang ada di package apihelper
+//        sharedPrefManager = new SharedPrefManager(this);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                razia();
-
-                //String username = mViewUser.getText().toString();
-                //String password = mViewPassword.getText().toString();
-
-                // Check if username, password is filled
-                //if(username.trim().length() > 0 && password.trim().length() > 0){
-                    // For testing puspose username, password is checked with sample data
-                    // username = test
-                    // password = test
-                    //if(username.equals("test") && password.equals("test")){
-
-                        // Creating user login session
-                        // For testing i am stroing name, email as follow
-                        // Use user real data
-                        //session.createLoginSession("Android Hive", "anroidhive@gmail.com");
-
-                        // Staring MainActivity
-                        //Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                        //startActivity(i);
-                        //finish();
-
-                    //}else{
-                        //showDialog2();
-                    //}
-                //}else{
-                    //showDialog3();
-                //}
-
+                loading = ProgressDialog.show(mContext, null, "Harap Tunggu...", true, false);
+                requestLogin();
             }
         });
-
     }
 
     private void showDialog3(){
@@ -237,5 +236,46 @@ public class LoginActivity extends AppCompatActivity {
     private boolean cekUser(String user){
         return user.equals(Preferences.getRegisteredUser(getBaseContext()));
     }
+    private void requestLogin(){
+        mApiService.loginRequest(etEmail.getText().toString(), etPassword.getText().toString())
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()){
+                            loading.dismiss();
+                            try {
+                                JSONObject jsonRESULTS = new JSONObject(response.body().string());
+                                if (jsonRESULTS.getString("is_active").equals("1")){
+                                    // Jika login berhasil maka data nama yang ada di response API
+                                    // akan diparsing ke activity selanjutnya.
+                                    Toast.makeText(mContext, "BERHASIL LOGIN", Toast.LENGTH_LONG).show();
+//                                    String nama = jsonRESULTS.getJSONObject("user").getString("nama");
+//                                    sharedPrefManager.saveSPString(SharedPrefManager.SP_NAMA, nama);
+                                    // Shared Pref ini berfungsi untuk menjadi trigger session login
+//                                    sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, true);
+                                    startActivity(new Intent(mContext, MainActivity.class)
+                                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+//                                    finish();
+                                } else {
+                                    // Jika login gagal
+                                    String error_message = jsonRESULTS.getString("error_msg");
+                                    Toast.makeText(mContext, error_message, Toast.LENGTH_LONG).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            loading.dismiss();
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.e("debug", "onFailure: ERROR > " + t.toString());
+                        loading.dismiss();
+                    }
+                });
+    }
 }
