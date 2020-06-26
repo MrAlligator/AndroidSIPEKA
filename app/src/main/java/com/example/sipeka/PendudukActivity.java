@@ -46,14 +46,6 @@ public class PendudukActivity extends AppCompatActivity {
             }
         });
 
-        lihat = findViewById(R.id.btnKeluarga);
-        lihat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(PendudukActivity.this, KeluargaActivity.class));
-            }
-        });
-
         mRecyclerView = (RecyclerView) findViewById(R.id.listView1);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);

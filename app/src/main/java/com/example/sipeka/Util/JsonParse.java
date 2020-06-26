@@ -38,7 +38,7 @@ public class JsonParse {
         List<Provinsi> listProv = new ArrayList<Provinsi>();
         try {
             String temp = sName.replace(" ", "%20");
-            URL urlAPI = new URL("http://192.168.1.14/kelompok_5/prov_android/provinces?name="+temp);
+            URL urlAPI = new URL("http://192.168.1.20/kelompok_5/prov_android/provinces?name="+temp);
             URLConnection urlConnection = urlAPI.openConnection();
             BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             String line = reader.readLine();
@@ -66,7 +66,7 @@ public class JsonParse {
             StrictMode.setThreadPolicy(policy);
             String tempKab = sNamaKab.replace(" ", "%20");
             String spIdProv = sp.getString(SharedPref.SP_IDPROV, "");
-            URL urlAPI = new URL("http://192.168.1.14/kelompok_5/kabkot_android/regencies?province_id="+spIdProv+
+            URL urlAPI = new URL("http://192.168.1.20/kelompok_5/kabkot_android/regencies?province_id="+spIdProv+
                     "&name="+tempKab);
             URLConnection urlConnection = urlAPI.openConnection();
             BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));

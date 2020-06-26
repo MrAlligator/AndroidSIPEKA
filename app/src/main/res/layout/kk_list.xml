@@ -26,5 +26,5 @@
     <View
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="5dp"/>
+        android:layout_height="1dp"/>
 </LinearLayout>

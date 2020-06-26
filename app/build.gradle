@@ -36,27 +36,29 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation 'com.android.volley:volley:1.1.0'
-    //noinspection GradleCompatible
+//    noinspection GradleCompatible
     implementation 'com.android.support:design:25.0.1'
-    //noinspection GradleCompatible
+//    noinspection GradleCompatible
     implementation 'com.android.support:cardview-v7:25.0.1'
-    //noinspection GradleCompatible
+//    noinspection GradleCompatible
     implementation 'com.android.support:recyclerview-v7:25.0.1'
 
 //spinner
     implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
-
     implementation 'com.google.code.gson:gson:2.6.2'
     implementation 'com.squareup.retrofit2:retrofit:2.0.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.0.2'
 //login
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
-    //noinspection GradleCompatible
+
+//    noinspection GradleCompatible
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'cyd.awesome.android:awesome-material:1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+//    dark mode
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
