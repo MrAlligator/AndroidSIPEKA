@@ -12,20 +12,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sipeka.SharedPref.SharedPrefManager;
+
 import java.util.HashMap;
+
+import butterknife.BindView;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageView menu1, menu2, menu3, menu4, menu5, menu6, logout;
+    @BindView(R.id.logout)
+    ImageView logout;
+    ImageView menu1, menu2, menu3, menu4, menu5, menu6;
     TextView penduduk, keluarga, domisili, grafik, pengaturan, about;
-    SessionManagement session;
+    SharedPrefManager sharedPrefManager;
+//    SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        session = new SessionManagement(getApplicationContext());
+        sharedPrefManager = new SharedPrefManager(this);
+//        session = new SessionManagement(getApplicationContext());
 
         menu1 = findViewById(R.id.menu1);
         menu2 = findViewById(R.id.menu2);
@@ -41,17 +49,20 @@ public class MainActivity extends AppCompatActivity {
         pengaturan = findViewById(R.id.pengaturan);
         about = findViewById(R.id.about);
 
-        Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
 
-        session.checkLogin();
+//        session.checkLogin();
 
         // get user data from session
-        HashMap<String, String> user = session.getUserDetails();
+//        HashMap<String, String> user = session.getUserDetails();
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                session.logoutUser();
+                sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, false);
+                startActivity(new Intent(MainActivity.this, LoginActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                finish();
             }
         });
         menu1.setOnClickListener(new View.OnClickListener() {

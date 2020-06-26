@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.sipeka.Rest.Spinner.BaseApiService;
 import com.example.sipeka.Rest.Spinner.UtilsApi;
+import com.example.sipeka.SharedPref.SharedPrefManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,18 +54,24 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog loading;
     Context mContext;
     BaseApiService mApiService;
-
-
+    SharedPrefManager sharedPrefManager;
     Boolean pwdstatus = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //session = new SessionManagement(getApplicationContext());
+        sharedPrefManager = new SharedPrefManager(this);
 
         showpass = findViewById(R.id.showpass);
         lupa = findViewById(R.id.lupa);
+
+        if (sharedPrefManager.getSPSudahLogin()){
+            startActivity(new Intent(LoginActivity.this, MainActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+            finish();
+        }
 
         showpass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,23 +90,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-//        mViewPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
-//                    razia();
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
-
-        getSupportActionBar().hide();
-
         ButterKnife.bind(this);
         mContext = this;
-        mApiService = UtilsApi.getAPIService(); // meng-init yang ada di package apihelper
-//        sharedPrefManager = new SharedPrefManager(this);
+        mApiService = UtilsApi.getAPIService();
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +101,28 @@ public class LoginActivity extends AppCompatActivity {
                 requestLogin();
             }
         });
+    }
+
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Yakin Ingin Keluar dari Aplikasi?");
+        builder.setPositiveButton("Iya", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user pressed "yes", then he is allowed to exit from application
+                finish();
+            }
+        });
+        builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user select "No", just cancel this dialog and continue with app
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void showDialog3(){
@@ -146,96 +161,6 @@ public class LoginActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private void showDialog(){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                this);
-
-        alertDialogBuilder.setTitle("Keluar dari aplikasi?");
-
-        alertDialogBuilder
-                .setMessage("Klik Ya untuk keluar!")
-                .setIcon(R.mipmap.ic_launcher)
-                .setCancelable(false)
-                .setPositiveButton("Ya",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        LoginActivity.this.finish();
-                    }
-                })
-                .setNegativeButton("Tidak",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (Preferences.getLoggedInStatus(getBaseContext())){
-            startActivity(new Intent(getBaseContext(),MainActivity.class));
-            finish();
-        }
-    }
-
-    /** Men-check inputan User dan Password dan Memberikan akses ke MainActivity */
-    private void razia(){
-        /* Mereset semua Error dan fokus menjadi default */
-        mViewUser.setError(null);
-        mViewPassword.setError(null);
-        View fokus = null;
-        boolean cancel = false;
-
-        /* Mengambil text dari form User dan form Password dengan variable baru bertipe String*/
-        String user = mViewUser.getText().toString();
-        String password = mViewPassword.getText().toString();
-
-        /* Jika form user kosong atau TIDAK memenuhi kriteria di Method cekUser() maka, Set error
-         *  di Form User dengan menset variable fokus dan error di Viewnya juga cancel menjadi true*/
-        if (TextUtils.isEmpty(user)){
-            mViewUser.setError("This field is required");
-            fokus = mViewUser;
-            cancel = true;
-        }else if(!cekUser(user)){
-            mViewUser.setError("This Username is not found");
-            fokus = mViewUser;
-            cancel = true;
-        }
-
-        /* Sama syarat percabangannya dengan User seperti di atas. Bedanya ini untuk Form Password*/
-        if (TextUtils.isEmpty(password)){
-            mViewPassword.setError("This field is required");
-            fokus = mViewPassword;
-            cancel = true;
-        }else if (!cekPassword(password)){
-            mViewPassword.setError("This password is incorrect");
-            fokus = mViewPassword;
-            cancel = true;
-        }
-
-        /* Jika cancel true, variable fokus mendapatkan fokus */
-        if (cancel) fokus.requestFocus();
-        else masuk();
-    }
-
-    /** Menuju ke MainActivity dan Set User dan Status sedang login, di Preferences */
-    private void masuk(){
-        Preferences.setLoggedInUser(getBaseContext(),Preferences.getRegisteredUser(getBaseContext()));
-        Preferences.setLoggedInStatus(getBaseContext(),true);
-        startActivity(new Intent(getBaseContext(),MainActivity.class));finish();
-    }
-
-    /** True jika parameter password sama dengan data password yang terdaftar dari Preferences */
-    private boolean cekPassword(String password){
-        return password.equals(Preferences.getRegisteredPass(getBaseContext()));
-    }
-
-    /** True jika parameter user sama dengan data user yang terdaftar dari Preferences */
-    private boolean cekUser(String user){
-        return user.equals(Preferences.getRegisteredUser(getBaseContext()));
-    }
     private void requestLogin(){
         mApiService.loginRequest(etEmail.getText().toString(), etPassword.getText().toString())
                 .enqueue(new Callback<ResponseBody>() {
@@ -252,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
 //                                    String nama = jsonRESULTS.getJSONObject("user").getString("nama");
 //                                    sharedPrefManager.saveSPString(SharedPrefManager.SP_NAMA, nama);
                                     // Shared Pref ini berfungsi untuk menjadi trigger session login
-//                                    sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, true);
+                                    sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, true);
                                     startActivity(new Intent(mContext, MainActivity.class)
                                             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
 //                                    finish();
