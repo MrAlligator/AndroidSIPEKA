@@ -1,26 +1,22 @@
 package com.example.sipeka;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sipeka.Rest.Spinner.BaseApiService;
 import com.example.sipeka.Rest.Spinner.UtilsApi;
@@ -77,16 +73,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (pwdstatus) {
-                    mViewPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    etPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     pwdstatus = false;
                     showpass.setMaterialDesignIcon(FontCharacterMaps.MaterialDesign.MD_VISIBILITY);
-                    mViewPassword.setSelection(mViewPassword.length());
                 } else {
-                    mViewPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+                    etPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
                     pwdstatus = true;
                     showpass.setMaterialDesignIcon(FontCharacterMaps.MaterialDesign.MD_VISIBILITY_OFF);
-                    mViewPassword.setSelection(mViewPassword.length());
                 }
+                etPassword.setSelection(etPassword.length());
             }
         });
 
@@ -97,8 +92,16 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loading = ProgressDialog.show(mContext, null, "Harap Tunggu...", true, false);
-                requestLogin();
+                if (TextUtils.isEmpty(etEmail.getText().toString())) {
+                    showDialog3();
+                    etEmail.requestFocus();
+                } else if (TextUtils.isEmpty(etPassword.getText().toString())) {
+                    showDialog3();
+                    etPassword.requestFocus();
+                } else {
+                    loading = ProgressDialog.show(mContext, null, "Harap Tunggu...", true, false);
+                    requestLogin();
+                }
             }
         });
     }
@@ -162,8 +165,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void requestLogin(){
-        mApiService.loginRequest(etEmail.getText().toString(), etPassword.getText().toString())
-                .enqueue(new Callback<ResponseBody>() {
+        mApiService.loginRequest(etEmail.getText().toString(), etPassword.getText().toString()).enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if (response.isSuccessful()){
@@ -178,13 +180,12 @@ public class LoginActivity extends AppCompatActivity {
 //                                    sharedPrefManager.saveSPString(SharedPrefManager.SP_NAMA, nama);
                                     // Shared Pref ini berfungsi untuk menjadi trigger session login
                                     sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, true);
-                                    startActivity(new Intent(mContext, MainActivity.class)
-                                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                                    startActivity(new Intent(mContext, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
 //                                    finish();
                                 } else {
                                     // Jika login gagal
                                     String error_message = jsonRESULTS.getString("error_msg");
-                                    Toast.makeText(mContext, error_message, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(mContext, "PASSWORD ATAU USERNAME SALAH", Toast.LENGTH_LONG).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

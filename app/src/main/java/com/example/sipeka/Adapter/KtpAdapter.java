@@ -38,8 +38,22 @@ public class KtpAdapter extends RecyclerView.Adapter<KtpAdapter.MyViewHolder> {
             public void onClick(View view) {
                 Intent mIntent = new Intent(view.getContext(), LihatPenduduk.class);
                 mIntent.putExtra("NIK", mKtpList.get(position).getNik());
+                mIntent.putExtra("NIKK", mKtpList.get(position).getNoKk());
                 mIntent.putExtra("Nama", mKtpList.get(position).getNama());
                 mIntent.putExtra("Tempat Lahir", mKtpList.get(position).getTempatLahir());
+                mIntent.putExtra("Tanggal Lahir", mKtpList.get(position).getTanggalLahir());
+                mIntent.putExtra("Jenis Kelamin", mKtpList.get(position).getJenisKelamin());
+                mIntent.putExtra("Gol Darah", mKtpList.get(position).getGolDarah());
+                mIntent.putExtra("Alamat", mKtpList.get(position).getAlamat());
+                mIntent.putExtra("Kode RT", mKtpList.get(position).getKodeRt());
+                mIntent.putExtra("Kelurahan", mKtpList.get(position).getKelurahan());
+                mIntent.putExtra("Kecamatan", mKtpList.get(position).getKecamatan());
+                mIntent.putExtra("Agama", mKtpList.get(position).getAgama());
+                mIntent.putExtra("Status Perkawinan", mKtpList.get(position).getStatusPerkawinan());
+                mIntent.putExtra("Pekerjaan", mKtpList.get(position).getPekerjaan());
+                mIntent.putExtra("Kewarganegaraan", mKtpList.get(position).getKewarganegaraan());
+                mIntent.putExtra("Berlaku Hingga", mKtpList.get(position).getBerlakuHingga());
+                mIntent.putExtra("Gambar", mKtpList.get(position).getGambar_Ktp());
                 view.getContext().startActivity(mIntent);
             }
         });

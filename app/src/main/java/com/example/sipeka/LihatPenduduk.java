@@ -1,24 +1,21 @@
 package com.example.sipeka;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.Spinner;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sipeka.Rest.ApiClient;
 import com.example.sipeka.Rest.ApiInterface;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class LihatPenduduk extends AppCompatActivity {
-    EditText edtNik, edtNama, edttmptLahir;
+    EditText edtNik, edtNama, edtNoKK, edtTanggal, edtAlamat, edtPekerjaan, edtBerlaku;
     ApiInterface mApiInterface;
+    AutoCompleteTextView edttmptLahir, edtKelurahan, edtKecamatan;
+    Spinner edtJenkel;
 
 
     @Override
@@ -30,13 +27,28 @@ public class LihatPenduduk extends AppCompatActivity {
 
         edtNik = (EditText) findViewById(R.id.txtNIK);
         edtNama = (EditText) findViewById(R.id.txtNama);
-        edttmptLahir = (EditText) findViewById(R.id.txtTmptLahir);
+        edtNoKK = (EditText) findViewById(R.id.txtNoKK);
+        edtTanggal = findViewById(R.id.txtTanggal);
+        edtAlamat = findViewById(R.id.txtAlamat);
+        edtPekerjaan = findViewById(R.id.txtPekerjaan);
+        edtBerlaku = findViewById(R.id.txtBerlaku);
+        edtKelurahan = findViewById(R.id.txtKelurahan);
+        edtKecamatan = findViewById(R.id.txtKecamatan);
+        edtJenkel = findViewById(R.id.txtJenkel);
+        edttmptLahir = (AutoCompleteTextView) findViewById(R.id.txtTmptLahir);
         Intent mIntent = getIntent();
         edtNik.setText(mIntent.getStringExtra("NIK"));
         edtNik.setTag(edtNik.getKeyListener());
         edtNik.setKeyListener(null);
+        edtNoKK.setText(mIntent.getStringExtra("NIKK"));
         edtNama.setText(mIntent.getStringExtra("Nama"));
         edttmptLahir.setText(mIntent.getStringExtra("Tempat Lahir"));
+        edtTanggal.setText(mIntent.getStringExtra("Tanggal Lahir"));
+        edtAlamat.setText(mIntent.getStringExtra("Alamat"));
+        edtKelurahan.setText(mIntent.getStringExtra("Kelurahan"));
+        edtKecamatan.setText(mIntent.getStringExtra("Kecamatan"));
+        edtPekerjaan.setText(mIntent.getStringExtra("Pekerjaan"));
+        edtBerlaku.setText(mIntent.getStringExtra("Berlaku Hingga"));
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
 //        btUpdate = (Button) findViewById(R.id.btUpdate2);
 //        btUpdate.setOnClickListener(new View.OnClickListener() {
