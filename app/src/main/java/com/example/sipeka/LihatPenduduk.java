@@ -40,7 +40,7 @@ public class LihatPenduduk extends AppCompatActivity {
         edtNik.setText(mIntent.getStringExtra("NIK"));
         edtNik.setTag(edtNik.getKeyListener());
         edtNik.setKeyListener(null);
-        edtNoKK.setText(mIntent.getStringExtra("NIKK"));
+        edtNoKK.setText(mIntent.getStringExtra("No KK"));
         edtNama.setText(mIntent.getStringExtra("Nama"));
         edttmptLahir.setText(mIntent.getStringExtra("Tempat Lahir"));
         edtTanggal.setText(mIntent.getStringExtra("Tanggal Lahir"));

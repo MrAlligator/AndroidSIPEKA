@@ -16,11 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".LihatKeluarga"
+            android:label="Detail Keluarga"
+            android:parentActivityName=".KeluargaActivity"
+            android:theme="@style/AppTheme"></activity>
+        <activity
             android:name=".LihatPenduduk"
             android:label="Detail Penduduk"
             android:parentActivityName=".PendudukActivity"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".TambahKeluargaActivity"
             android:label="Tambah Keluarga"

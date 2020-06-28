@@ -1,14 +1,14 @@
 package com.example.sipeka;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sipeka.Adapter.KkAdapter;
 import com.example.sipeka.Model.Kk.GetKk;
@@ -45,7 +45,7 @@ public class KeluargaActivity extends AppCompatActivity {
                 startActivity(new Intent(KeluargaActivity.this, TambahKeluargaActivity.class));
             }
         });
-        mRecyclerView = (RecyclerView) findViewById(R.id.listView1);
+        mRecyclerView = (RecyclerView) findViewById(R.id.listView2);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
