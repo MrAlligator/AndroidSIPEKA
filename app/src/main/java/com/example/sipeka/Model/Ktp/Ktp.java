@@ -3,6 +3,10 @@ package com.example.sipeka.Model.Ktp;
 import com.google.gson.annotations.SerializedName;
 
 public class Ktp {
+    @SerializedName("provinsi")
+    private String provinsi;
+    @SerializedName("kabupaten")
+    private String kabupaten;
     @SerializedName("nik")
     private String nik;
     @SerializedName("noKk")
@@ -38,7 +42,7 @@ public class Ktp {
     @SerializedName("gambar_Ktp")
     private String gambar_Ktp;
 
-    public Ktp(String nik, String nama, String tempatLahir, String tanggalLahir, String jenisKelamin, String golDarah, String alamat, String kodeRt, String kodeRw, String kelurahan, String kecamatan, String agama, String statusPerkawinan, String pekerjaan, String kewarganegaraan, String berlakuHingga, String gambar_Ktp) {
+    public Ktp(String provinsi, String kabupaten, String nik, String nama, String tempatLahir, String tanggalLahir, String jenisKelamin, String golDarah, String alamat, String kodeRt, String kodeRw, String kelurahan, String kecamatan, String agama, String statusPerkawinan, String pekerjaan, String kewarganegaraan, String berlakuHingga, String gambar_Ktp) {
         this.nik = nik;
         this.noKk = noKk;
         this.nama = nama;
@@ -56,6 +60,14 @@ public class Ktp {
         this.kewarganegaraan = kewarganegaraan;
         this.berlakuHingga = berlakuHingga;
         this.gambar_Ktp = gambar_Ktp;
+    }
+
+    public String getProvinsi() {
+        return provinsi;
+    }
+
+    public String getKabupaten() {
+        return kabupaten;
     }
 
     public String getNik() {
@@ -124,6 +136,14 @@ public class Ktp {
 
     public String getGambar_Ktp() {
         return gambar_Ktp;
+    }
+
+    public void setProvinsi(String provinsi) {
+        this.provinsi = provinsi;
+    }
+
+    public void setKabupaten(String kabupaten) {
+        this.kabupaten = kabupaten;
     }
 
     public void setNik(String nik) {

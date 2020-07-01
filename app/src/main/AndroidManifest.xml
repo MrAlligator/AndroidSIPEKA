@@ -16,10 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".EditPendActivity"
-            android:label="Ubah Data Penduduk"
-            android:parentActivityName=".LihatPenduduk"
-            android:theme="@style/AppTheme" />
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".LihatKeluarga"
             android:label="Detail Keluarga"
@@ -73,8 +71,10 @@
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".SplashScreen"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

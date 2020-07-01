@@ -37,6 +37,8 @@ public class KtpAdapter extends RecyclerView.Adapter<KtpAdapter.MyViewHolder> {
             @Override
             public void onClick(View view) {
                 Intent mIntent = new Intent(view.getContext(), LihatPenduduk.class);
+                mIntent.putExtra("Prov", mKtpList.get(position).getProvinsi());
+                mIntent.putExtra("Kab", mKtpList.get(position).getKabupaten());
                 mIntent.putExtra("NIK", mKtpList.get(position).getNik());
                 mIntent.putExtra("NIKK", mKtpList.get(position).getNoKk());
                 mIntent.putExtra("Nama", mKtpList.get(position).getNama());

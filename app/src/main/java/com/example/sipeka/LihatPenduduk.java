@@ -2,10 +2,12 @@ package com.example.sipeka;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,10 +21,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LihatPenduduk extends AppCompatActivity {
-    EditText edtNik, edtNama, edtNoKK, edtTanggal, edtAlamat, edtPekerjaan, edtBerlaku, edtJenkel, edtGoldar, edtKode, edtRw, edtRt, edtAgama, edtStatus, edtKewarganegaraan;
+    EditText temp1, temp2, temp3, temp4, temp5, temp6, edtNik, edtNama, edtNoKK, edtTanggal, edtAlamat, edtPekerjaan, edtBerlaku, edtGoldar, edtKode, edtRw, edtRt, edtStatus, edtKewarganegaraan;
     ApiInterface mApiInterface;
-    AutoCompleteTextView edttmptLahir, edtKelurahan, edtKecamatan;
+    AutoCompleteTextView  edtKelurahan, edtKecamatan, edtProv, edtKab;
     Button btDelete, btUpdate;
+    Spinner edttmptLahir, edtJenkel, edtAgama;
+    private static final String TAG = LihatPenduduk.class.getSimpleName();
 
 
     @Override
@@ -32,6 +36,13 @@ public class LihatPenduduk extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+        temp1 = findViewById(R.id.temp1);
+        temp2 = findViewById(R.id.temp2);
+        temp3 = findViewById(R.id.temp3);
+        temp4 = findViewById(R.id.temp4);
+        temp5 = findViewById(R.id.temp5);
+        temp6 = findViewById(R.id.temp6);
         edtNik = (EditText) findViewById(R.id.txtNIK);
         edtNama = (EditText) findViewById(R.id.txtNama);
         edtNoKK = (EditText) findViewById(R.id.txtNoKK);
@@ -41,41 +52,42 @@ public class LihatPenduduk extends AppCompatActivity {
         edtBerlaku = findViewById(R.id.txtBerlaku);
         edtKelurahan = findViewById(R.id.txtKelurahan);
         edtKecamatan = findViewById(R.id.txtKecamatan);
+        edtKab = findViewById(R.id.txtKab);
+        edtProv = findViewById(R.id.txtProv);
         edtJenkel = findViewById(R.id.txtJenkel);
-        edtAgama = findViewById(R.id.txtAgama);
-        edtGoldar = findViewById(R.id.txtGoldar);
-        edtKode = findViewById(R.id.txtRT);
-        edtRt = findViewById(R.id.txtRT1);
-        edtRw = findViewById(R.id.txtRT2);
-        edtStatus = findViewById(R.id.txtStatus);
-        edtKewarganegaraan = findViewById(R.id.txtKewarganegaraan);
-        edttmptLahir = (AutoCompleteTextView) findViewById(R.id.txtTmptLahir);
+//        edtAgama = findViewById(R.id.txtAgama);
+//        edtGoldar = findViewById(R.id.txtGoldar);
+//        edtKode = findViewById(R.id.txtRT);
+//        edtRt = findViewById(R.id.txtRT1);
+//        edtRw = findViewById(R.id.txtRT2);
+//        edtStatus = findViewById(R.id.txtStatus);
+//        edtKewarganegaraan = findViewById(R.id.txtKewarganegaraan);
+        edttmptLahir = (Spinner) findViewById(R.id.txtKota);
         Intent mIntent = getIntent();
         edtNik.setText(mIntent.getStringExtra("NIK"));
         edtNik.setTag(edtNik.getKeyListener());
         edtNik.setKeyListener(null);
-        edtNoKK.setText(mIntent.getStringExtra("No KK"));
+        edtNoKK.setText(mIntent.getStringExtra("NIKK"));
         edtNama.setText(mIntent.getStringExtra("Nama"));
-        edttmptLahir.setText(mIntent.getStringExtra("Tempat Lahir"));
+        //edttmptLahir.setText(mIntent.getStringExtra("Tempat Lahir"));
         edtTanggal.setText(mIntent.getStringExtra("Tanggal Lahir"));
         edtAlamat.setText(mIntent.getStringExtra("Alamat"));
         edtKelurahan.setText(mIntent.getStringExtra("Kelurahan"));
         edtKecamatan.setText(mIntent.getStringExtra("Kecamatan"));
         edtPekerjaan.setText(mIntent.getStringExtra("Pekerjaan"));
         edtBerlaku.setText(mIntent.getStringExtra("Berlaku Hingga"));
-        edtJenkel.setText(mIntent.getStringExtra("Jenis Kelamin"));
-        edtAgama.setText(mIntent.getStringExtra("Agama"));
-        edtGoldar.setText(mIntent.getStringExtra("Gol Darah"));
-        edtKode.setText(mIntent.getStringExtra("KodeRT"));
-        edtStatus.setText(mIntent.getStringExtra("Status Perkawinan"));
+        edtProv.setText(mIntent.getStringExtra("Prov"));
+        edtKab.setText(mIntent.getStringExtra("Kab"));
+        temp1.setText(mIntent.getStringExtra("Jenis Kelamin"));
+//        edtJenkel.setSelection(1);
+        if (temp1.getText().toString() == "Perempuan") {
+            Log.e(TAG, "Jalan po gak" );
+            edtJenkel.setSelection(1);
+        } else {
+            edtJenkel.setSelection(0);
+        }
+        temp2.setText(temp1.getText().toString());
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
-        btUpdate = (Button) findViewById(R.id.Edit);
-        btUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LihatPenduduk.this, EditPendActivity.class));
-            }
-        });
         btDelete = (Button) findViewById(R.id.Hapus);
         btDelete.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -8,29 +8,29 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp">
         <TextView
-            android:id="@+id/tvId"
+            android:id="@+id/tvkodeRt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Id"
+            android:hint="Kode"
             android:layout_alignParentRight="true"
             android:textSize="15sp"
             android:textStyle="bold"
             />
         <TextView
-            android:id="@+id/tvNama"
+            android:id="@+id/tvrt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Nama"
-            android:layout_below="@id/tvId"
+            android:hint="RT"
+            android:layout_below="@id/tvkodeRt"
             android:textSize="15sp"
             />
         <TextView
-            android:id="@+id/tvNomor"
+            android:id="@+id/tvrw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Nomor"
+            android:hint="RW"
             android:textSize="15sp"
-            android:layout_below="@id/tvNama"
+            android:layout_below="@id/tvrt"
             />
     </RelativeLayout>
     <View
