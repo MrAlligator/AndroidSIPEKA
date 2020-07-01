@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.sipeka.LihatPenduduk;
+import com.example.sipeka.LihatKeluarga;
 import com.example.sipeka.Model.Kk.Kk;
 import com.example.sipeka.R;
 
@@ -36,7 +36,7 @@ public class KkAdapter extends RecyclerView.Adapter<KkAdapter.MyViewHolder> {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent mIntent = new Intent(view.getContext(), LihatPenduduk.class);
+                    Intent mIntent = new Intent(view.getContext(), LihatKeluarga.class);
                     mIntent.putExtra("No KK", mKkList.get(position).getNoKk());
                     mIntent.putExtra("Nama KK", mKkList.get(position).getNamaKk());
                     mIntent.putExtra("Alamat", mKkList.get(position).getAlamat());

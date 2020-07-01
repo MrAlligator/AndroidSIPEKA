@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     BaseApiService mApiService;
     SharedPrefManager sharedPrefManager;
     Boolean pwdstatus = true;
+    private static final String TAG = LoginActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                 this);
 
         alertDialogBuilder
-                .setMessage("Username atau Password Salah")
+                .setMessage("Password Salah")
                 .setIcon(R.mipmap.ic_launcher)
                 .setCancelable(false)
                 .setNegativeButton("OK",new DialogInterface.OnClickListener() {
@@ -164,6 +165,22 @@ public class LoginActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    private void showDialog1(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+
+        alertDialogBuilder
+                .setMessage("Email Salah")
+                .setIcon(R.mipmap.ic_launcher)
+                .setCancelable(false)
+                .setNegativeButton("OK",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
     private void requestLogin(){
         mApiService.loginRequest(etEmail.getText().toString(), etPassword.getText().toString()).enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -172,33 +189,41 @@ public class LoginActivity extends AppCompatActivity {
                             loading.dismiss();
                             try {
                                 JSONObject jsonRESULTS = new JSONObject(response.body().string());
-                                if (jsonRESULTS.getString("is_active").equals("1")){
-                                    // Jika login berhasil maka data nama yang ada di response API
-                                    // akan diparsing ke activity selanjutnya.
-                                    Toast.makeText(mContext, "BERHASIL LOGIN", Toast.LENGTH_LONG).show();
-//                                    String nama = jsonRESULTS.getJSONObject("user").getString("nama");
-//                                    sharedPrefManager.saveSPString(SharedPrefManager.SP_NAMA, nama);
-                                    // Shared Pref ini berfungsi untuk menjadi trigger session login
-                                    sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, true);
-                                    startActivity(new Intent(mContext, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-//                                    finish();
-                                } else {
-                                    // Jika login gagal
-                                    String error_message = jsonRESULTS.getString("error_msg");
-                                    Toast.makeText(mContext, "PASSWORD ATAU USERNAME SALAH", Toast.LENGTH_LONG).show();
-                                }
+
+                                if (jsonRESULTS.getString("email").equals(etEmail.getText().toString())){
+
+                                    if (jsonRESULTS.getString("password").equals(etPassword.getText().toString())) {
+
+                                           // Jika login berhasil maka data nama yang ada di response API
+                                           // akan diparsing ke activity selanjutnya.
+
+                                        Toast.makeText(mContext, "BERHASIL LOGIN", Toast.LENGTH_LONG).show();
+//                                        String nama = jsonRESULTS.getJSONObject("user").getString("nama");
+//                                        sharedPrefManager.saveSPString(SharedPrefManager.SP_NAMA, nama);
+                                           // Shared Pref ini berfungsi untuk menjadi trigger session login
+                                        sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, true);
+                                        startActivity(new Intent(mContext, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+//                                           finish();
+                                       }else{
+                                            showDialog2();
+                                           }
+                                       }else{
+                                    showDialog1();
+                                   }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         } else {
+                            Toast.makeText(mContext, "PASSWORD SALAH", Toast.LENGTH_LONG).show();
                             loading.dismiss();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(mContext, "PASSWORD SALAH", Toast.LENGTH_LONG).show();
                         Log.e("debug", "onFailure: ERROR > " + t.toString());
                         loading.dismiss();
                     }

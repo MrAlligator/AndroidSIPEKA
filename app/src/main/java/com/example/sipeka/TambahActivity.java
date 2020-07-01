@@ -1,7 +1,5 @@
 package com.example.sipeka;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -12,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -22,15 +19,12 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.sipeka.Adapter.Indonesia.SuggestionDesaAdapter;
-import com.example.sipeka.Adapter.Indonesia.SuggestionKabAdapter;
-import com.example.sipeka.Adapter.Indonesia.SuggestionKecAdapter;
-import com.example.sipeka.Adapter.Indonesia.SuggestionProvAdapter;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.sipeka.Model.Ktp.PostPutDelKtp;
-import com.example.sipeka.Model.Response.ResponseKab;
-import com.example.sipeka.Model.Response.ResponseKec;
+import com.example.sipeka.Model.Response.ResponseRt;
 import com.example.sipeka.Model.Response.ResultItem;
-import com.example.sipeka.Model.Response.ResultItemKec;
 import com.example.sipeka.Rest.ApiClient;
 import com.example.sipeka.Rest.ApiInterface;
 import com.example.sipeka.Rest.Spinner.BaseApiService;
@@ -59,7 +53,7 @@ public class TambahActivity extends AppCompatActivity {
     private static final int galleryCode = 100;
     private Calendar calendar;
     private EditText txtTanggal, txtNama, txtNIK, txtNoKK, txtAlamat, txtRT, txtRW, txtPekerjaan, txtBerlaku;
-    private Spinner  SpJenKel, SpGoldar, SpKodeRT, SpAgama, SpStatus, SpKewarganegaraan;
+    private Spinner SpJenKel, SpGoldar, SpKodeRT, SpAgama, SpStatus, SpKewarganegaraan;
     private AutoCompleteTextView ACTVProv, ACTVKab, ACTVKec, ACTVKel;
     private JsonParse jsonParse;
     ApiInterface mApiInterface;
@@ -67,6 +61,10 @@ public class TambahActivity extends AppCompatActivity {
     Spinner SpKota;
     ProgressDialog loading;
     BaseApiService mApiService;
+    private AlertDialog.Builder alert;
+    private AlertDialog ad;
+    public String kodeProv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +78,7 @@ public class TambahActivity extends AppCompatActivity {
         mApiService = UtilsApi.getAPIService();
         jsonParse = new JsonParse(this);
 
-//        initSpinnerDosen();
+        initSpinnerDosen();
         mContext = this;
         calendar = Calendar.getInstance();
         txtTanggal = findViewById(R.id.txtTanggal);
@@ -103,10 +101,10 @@ public class TambahActivity extends AppCompatActivity {
         SpAgama = findViewById(R.id.txtAgama);
         SpStatus = findViewById(R.id.txtStatus);
         SpKewarganegaraan = findViewById(R.id.txtKewarganegaraan);
-        ACTVKec = findViewById(R.id.txtKecamatan);
-        ACTVKel = findViewById(R.id.txtKelurahan);
-        ACTVKab = findViewById(R.id.txtKab);
-        ACTVProv = findViewById(R.id.txtProv);
+//        ACTVKec = findViewById(R.id.txtKecamatan);
+//        ACTVKel = findViewById(R.id.txtKelurahan);
+//        ACTVKab = findViewById(R.id.txtKab);
+//        ACTVProv = findViewById(R.id.txtProv);
 
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
 
@@ -143,7 +141,7 @@ public class TambahActivity extends AppCompatActivity {
         });
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
-        @Override
+            @Override
             public void onClick(View v) {
                 Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(photoCaptureIntent, cameraCode);
@@ -166,53 +164,75 @@ public class TambahActivity extends AppCompatActivity {
                         calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-        ACTVProv.setAdapter(new SuggestionProvAdapter(this, ACTVProv.getText().toString()));
-        ACTVProv.setThreshold(1);
-        ACTVProv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String namaProv = parent.getItemAtPosition(position).toString();
-                jsonParse.searchIdProv(namaProv);
-            }
-        });
-
-        ACTVKab.setAdapter(new SuggestionKabAdapter(this, ACTVProv.getText().toString(),
-                ACTVKab.getText().toString()));
-        ACTVKab.setThreshold(1);
-        ACTVKab.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String namaKab = parent.getItemAtPosition(position).toString();
-                jsonParse.searchIdKab(namaKab);
-            }
-        });
-
-        ACTVKec.setAdapter(new SuggestionKecAdapter(this, ACTVKab.getText().toString(),
-                ACTVKec.getText().toString()));
-        ACTVKec.setThreshold(1);
-        ACTVKec.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String namaKec = parent.getItemAtPosition(position).toString();
-                jsonParse.searchIdKec(namaKec);
-            }
-        });
-
-        ACTVKel.setAdapter(new SuggestionDesaAdapter(this, ACTVKec.getText().toString(),
-                ACTVKel.getText().toString()));
-        ACTVKel.setThreshold(1);
-        ACTVKel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
+//        ACTVProv.setAdapter(new SuggestionProvAdapter(this, ACTVProv.getText().toString()));
+//        ACTVProv.setThreshold(1);
+//        ACTVProv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                popUpProvince();
+//            }
+//        });
+//        AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String namaProv = parent.getItemAtPosition(position).toString();
+//                jsonParse.searchIdProv(namaProv);
+//            }
+//        });
+//
+//        ACTVKab.setAdapter(new SuggestionKabAdapter(this, ACTVProv.getText().toString(),
+//                ACTVKab.getText().toString()));
+//        ACTVKab.setThreshold(1);
+//        ACTVKab.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String namaKab = parent.getItemAtPosition(position).toString();
+//                jsonParse.searchIdKab(namaKab);
+//            }
+//        });
+//
+//        ACTVKec.setAdapter(new SuggestionKecAdapter(this, ACTVKab.getText().toString(),
+//                ACTVKec.getText().toString()));
+//        ACTVKec.setThreshold(1);
+//        ACTVKec.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String namaKec = parent.getItemAtPosition(position).toString();
+//                jsonParse.searchIdKec(namaKec);
+//            }
+//        });
+//
+//        ACTVKel.setAdapter(new SuggestionDesaAdapter(this, ACTVKec.getText().toString(),
+//                ACTVKel.getText().toString()));
+//        ACTVKel.setThreshold(1);
+//        ACTVKel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//            }
+//        });
     }
+
+//    private void popUpProvince() {
+//        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View alertLayout = inflater.inflate(R.layout.custom_dialog_search, null);
+//
+//        alert = new AlertDialog.Builder(TambahActivity.this);
+//        alert.setTitle("List ListProvince");
+//        alert.setMessage("select your province");
+//        alert.setView(alertLayout);
+//        alert.setCancelable(true);
+//
+//        ad = alert.show();
+//
+//
+//    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == Activity.RESULT_OK){
+        if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case galleryCode:
                     Uri imageUri = data.getData();
@@ -309,39 +329,35 @@ public class TambahActivity extends AppCompatActivity {
 //
 //    }
 
+    private void initSpinnerDosen(){
+        loading = ProgressDialog.show(mContext, null, "harap tunggu...", true, false);
 
-//    private void initSpinnerDosen(){
-//        loading = ProgressDialog.show(mContext, null, "harap tunggu...", true, false);
-//
-//        mApiService.getSemuaKabupaten().enqueue(new Callback<ResponseKab>() {
-//            @Override
-//            public void onResponse(Call<ResponseKab> call, Response<ResponseKab> response) {
-//                if (response.isSuccessful()) {
-//                    loading.dismiss();
-//                    List<ResultItem> semuadosenItems = response.body().getResult();
-//                    List<String> listSpinner = new ArrayList<String>();
-//                    for (int i = 0; i < semuadosenItems.size(); i++){
-//                        listSpinner.add(semuadosenItems.get(i).getNama_kabkot());
-//                            tv2.setText(semuadosenItems.get(i).getRw());
-//                    }
-//
-//                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
-//                            android.R.layout.simple_spinner_item, listSpinner);
-//                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                    SpKota.setAdapter(adapter);
-//                } else {
-//                    loading.dismiss();
-//                    Toast.makeText(mContext, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseKab> call, Throwable t) {
-//                loading.dismiss();
-//                Toast.makeText(mContext, "BELUM BISA", Toast.LENGTH_SHORT).show();
-//            }
-//
-//        });
-//    }
+        mApiService.getSemuaRt().enqueue(new Callback<ResponseRt>() {
 
+            @Override
+            public void onResponse(Call<ResponseRt> call, Response<ResponseRt> response) {
+                if (response.isSuccessful()) {
+                    loading.dismiss();
+                    List<ResultItem> semuadosenRt = response.body().getResult();
+                    List<String> listSpinner = new ArrayList<String>();
+                    for (int i = 0; i < semuadosenRt.size(); i++)
+                        listSpinner.add("RT : "+semuadosenRt.get(i).getRt()+" / RW : "+semuadosenRt.get(i).getRw()
+                        );
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
+                            android.R.layout.simple_spinner_item, listSpinner);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    SpKodeRT.setAdapter(adapter);
+
+            } else {
+                loading.dismiss();
+                Toast.makeText(mContext, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
+            }
+            }
+            @Override
+            public void onFailure(Call<ResponseRt> call, Throwable t) {
+                loading.dismiss();
+                Toast.makeText(mContext, "BELUM BISA", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

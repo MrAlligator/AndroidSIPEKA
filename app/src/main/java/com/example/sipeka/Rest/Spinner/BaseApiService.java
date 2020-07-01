@@ -1,6 +1,6 @@
 package com.example.sipeka.Rest.Spinner;
 
-import com.example.sipeka.Model.Response.ResponseKab;
+import com.example.sipeka.Model.Response.ResponseRt;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -10,13 +10,10 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface BaseApiService {
-    @GET("kabkot_android")
-    Call<ResponseKab> getSemuaKabupaten();
+    @GET("rt_android")
+    Call<ResponseRt> getSemuaRt();
 
-    @GET("kec_android")
-    Call<ResponseKab> getSemuaKecamatan();
     @FormUrlEncoded
-
     @POST("rest_login")
     Call<ResponseBody> loginRequest(@Field("email") String email,
                                     @Field("password") String password);

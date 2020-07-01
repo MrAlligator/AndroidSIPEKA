@@ -51,7 +51,11 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/txtProv"
                     android:layout_marginTop="10dp"
-                    />
+                    android:inputType="textCapCharacters"
+                    android:hint="Provinsi" >
+
+                    <requestFocus/>
+                </AutoCompleteTextView>
 
             </LinearLayout>
 
@@ -76,6 +80,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/txtKab"
                     android:layout_marginTop="10dp"
+                    android:inputType="textCapCharacters"
+                    android:hint="Kabupaten"
                     />
 
             </LinearLayout>
@@ -99,6 +105,7 @@
                 android:layout_alignLeft="@id/textView1"
                 android:layout_below="@id/textView1"
                 android:inputType="number"
+                android:hint="NIK"
                 android:layout_marginTop="10dp"
                 />
 
@@ -123,7 +130,8 @@
                 android:layout_alignLeft="@id/textView1"
                 android:layout_below="@id/textView00"
                 android:layout_marginTop="10dp"
-                android:inputType="textCapWords"
+                android:inputType="number"
+                android:hint="No KK"
                 />
 
             <TextView
@@ -147,6 +155,7 @@
                 android:layout_alignLeft="@id/textView1"
                 android:layout_below="@id/textView2"
                 android:layout_marginTop="10dp"
+                android:hint="Nama Lengkap"
                 android:inputType="textCapWords"
                 />
 
@@ -196,6 +205,7 @@
                 android:clickable="true"
                 android:inputType="date"
                 android:focusable="false"
+                android:hint="Tanggal"
                 />
 
             <TextView
@@ -267,6 +277,7 @@
                 android:layout_below="@id/textView7"
                 android:layout_marginTop="10dp"
                 android:inputType="textCapSentences"
+                android:hint="Alamat"
                 />
 
             <TextView
@@ -307,6 +318,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="25dp"
                     android:enabled="false"
+                    android:hint="RT"
                     />
                 <EditText
                     android:layout_width="136dp"
@@ -316,6 +328,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="25dp"
                     android:enabled="false"
+                    android:hint="RW"
                     />
 
             </LinearLayout>
@@ -340,6 +353,8 @@
                 android:layout_alignLeft="@id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textCapCharacters"
+                android:hint="Kelurahan"
                 />
 
             <TextView
@@ -362,6 +377,8 @@
                 android:layout_alignLeft="@id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textCapCharacters"
+                android:hint="Kecamatan"
                 />
 
             <TextView
@@ -434,6 +451,7 @@
                 android:layout_below="@id/textView14"
                 android:layout_marginTop="10dp"
                 android:inputType="textCapSentences"
+                android:hint="Pekerjaan"
                 />
 
             <TextView

@@ -59,7 +59,7 @@ public class RtAdapter extends RecyclerView.Adapter<RtAdapter.MyViewHolder>{
             super(itemView);
             mTextViewId = (TextView) itemView.findViewById(R.id.tvId);
             mTextViewNama = (TextView) itemView.findViewById(R.id.tvNama);
-            mTextViewNomor = (TextView) itemView.findViewById(R.id.tvNomor);
+//            mTextViewNomor = (TextView) itemView.findViewById(R.id.tvNomor);
         }
     }
 }
