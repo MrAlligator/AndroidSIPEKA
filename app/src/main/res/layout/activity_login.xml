@@ -40,7 +40,7 @@
                 android:layout_marginLeft="72dp"
                 android:layout_marginTop="50dp"
                 android:layout_marginRight="32dp"
-                android:maxLength="20"
+                android:maxLength="100"
                 android:imeOptions="actionNext"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
@@ -111,11 +111,19 @@
                 android:layout_marginTop="5dp"
                 android:textColor="#FFFFFF"
                 android:text="@string/lupa"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_centerHorizontal="true"/>
 
         </RelativeLayout>
 
     </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alpha Version"
+        android:textColor="#FFFFFF"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="625dp"/>
 
 </RelativeLayout>

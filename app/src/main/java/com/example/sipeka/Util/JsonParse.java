@@ -3,7 +3,7 @@ package com.example.sipeka.Util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.StrictMode;
-import android.widget.Toast;
+import android.util.Log;
 
 import com.example.sipeka.Model.Indonesia.Desa;
 import com.example.sipeka.Model.Indonesia.Kabupaten;
@@ -43,10 +43,11 @@ public class JsonParse {
             BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             String line = reader.readLine();
             JSONObject jsonResponse = new JSONObject(line);
-            if (jsonResponse.isNull("province")){
+            if (jsonResponse.isNull("provinces")){
 
             } else {
                 JSONArray jsonArray = jsonResponse.getJSONArray("provinces");
+                Log.e(TAG, "getParseJsonProv: " + jsonArray );
                 for (int i = 0; i < jsonArray.length(); i++){
                     JSONObject result = jsonArray.getJSONObject(i);
                     listProv.add(new Provinsi(result.getString("name"), result.getString("name")));

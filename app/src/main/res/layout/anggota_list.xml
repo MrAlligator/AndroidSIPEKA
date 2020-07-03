@@ -1,32 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp">
         <TextView
-            android:id="@+id/tvId"
+            android:id="@+id/tvNik"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="NIK"
+            android:hint="No KK"
             android:textSize="15sp"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold"/>
         <TextView
             android:id="@+id/tvNama"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Nama"
-            android:layout_below="@id/tvId"
+            android:hint="Nama KK"
             android:textSize="15sp"
-            />
+            android:layout_below="@id/tvNik"/>
     </RelativeLayout>
     <View
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="5dp"/>
-
-</LinearLayout>
+</RelativeLayout>

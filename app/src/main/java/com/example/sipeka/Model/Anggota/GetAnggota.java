@@ -1,14 +1,13 @@
-package com.example.sipeka.Model.Ktp;
-
+package com.example.sipeka.Model.Anggota;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class GetKtp {
+public class GetAnggota {
     @SerializedName("status")
     String status;
     @SerializedName("result")
-    List<Ktp> listDataKtp;
+    List<Anggota> listDataAnggota;
     @SerializedName("message")
     String message;
     public String getStatus() {
@@ -23,10 +22,10 @@ public class GetKtp {
     public void setMessage(String message) {
         this.message = message;
     }
-    public List<Ktp> getListDataKtp() {
-        return listDataKtp;
+    public List<Anggota> getListDataAnggota() {
+        return listDataAnggota;
     }
-    public void setListDataKtp(List<Ktp> listDataKontak) {
-        this.listDataKtp = listDataKtp;
+    public void setListDataAnggota(List<Anggota> listDataAnggota) {
+        this.listDataAnggota = listDataAnggota;
     }
 }

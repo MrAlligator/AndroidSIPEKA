@@ -2,21 +2,28 @@ package com.example.sipeka.Rest;
 
 
 
+import com.example.sipeka.Model.Anggota.GetAnggota;
 import com.example.sipeka.Model.Indonesia.Provinsi;
 import com.example.sipeka.Model.Kk.GetKk;
 import com.example.sipeka.Model.Kk.PostPutDelKk;
 import com.example.sipeka.Model.Ktp.GetKtp;
 import com.example.sipeka.Model.Ktp.PostPutDelKtp;
+import com.example.sipeka.Model.Response.ResponseRt;
+import com.example.sipeka.Model.Response.UploadImage;
 import com.example.sipeka.Model.Rt.GetRt;
 import com.example.sipeka.Model.Rt.PostPutDelRt;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 
 public interface ApiInterface {
     @GET("rt_android")
@@ -39,7 +46,9 @@ public interface ApiInterface {
     Call<GetKtp> getKtp();
     @FormUrlEncoded
     @POST("ktp_android")
-    Call<PostPutDelKtp> postKtp(@Field("nik") String nik,
+    Call<PostPutDelKtp> postKtp(@Field("provinsi") String provinsi,
+                                @Field("kabupaten") String kabupaten,
+                                @Field("nik") String nik,
                                 @Field("nama") String nama,
                                 @Field("noKk") String noKk,
                                 @Field("tempatLahir") String tempatLahir,
@@ -57,7 +66,9 @@ public interface ApiInterface {
                                 @Field("berlakuHingga") String berlakuHingga);
     @FormUrlEncoded
     @PUT("ktp_android")
-    Call<PostPutDelKtp> putKtp(@Field("nik") String nik,
+    Call<PostPutDelKtp> putKtp(@Field("provinsi") String provinsi,
+                               @Field("kabupaten") String kabupaten,
+                               @Field("nik") String nik,
                                @Field("nama") String nama,
                                @Field("noKk") String noKk,
                                @Field("tempatLahir") String tempatLahir,
@@ -112,5 +123,18 @@ public interface ApiInterface {
 
     @GET("prov_android")
     Call<Provinsi> getProv();
+
+    @FormUrlEncoded
+    @POST("load_rt")
+    Call<ResponseRt> getkodeRt(@Field("kodeRt") String kodeRt);
+
+    @Multipart
+    @POST("upload_ktp")
+    Call<UploadImage> uploadFile(@Part MultipartBody.Part file,
+                                 @Part("file")RequestBody name);
+
+    @FormUrlEncoded
+    @POST("anggota")
+    Call<GetAnggota> Anggota(@Field("noKk") String noKk);
 
 }

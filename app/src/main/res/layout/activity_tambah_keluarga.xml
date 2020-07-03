@@ -21,12 +21,185 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/textView01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Asal Kartu Tanda Penduduk"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                />
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/Line2"
+                android:layout_below="@+id/textView01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Prov"
+                    android:text="Provinsi"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    />
+                <AutoCompleteTextView
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtProv"
+                    android:layout_marginTop="10dp"
+                    android:inputType="textCapCharacters"
+                    android:hint="Provinsi" >
+
+                    <requestFocus/>
+                </AutoCompleteTextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/Line3"
+                android:layout_below="@+id/Line2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Kab"
+                    android:text="Kabupaten"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    />
+                <AutoCompleteTextView
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtKab"
+                    android:layout_marginTop="10dp"
+                    android:inputType="textCapCharacters"
+                    android:hint="Kabupaten"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/Line4"
+                android:layout_below="@+id/Line3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Kec"
+                    android:text="Kecamatan"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    />
+                <AutoCompleteTextView
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtKec"
+                    android:layout_marginTop="10dp"
+                    android:inputType="textCapCharacters"
+                    android:hint="Kecamatan"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/Line5"
+                android:layout_below="@+id/Line4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Kel"
+                    android:text="Kelurahan"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    />
+                <AutoCompleteTextView
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtKel"
+                    android:layout_marginTop="10dp"
+                    android:inputType="textCapCharacters"
+                    android:hint="Kelurahan"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/Line7"
+                android:layout_below="@id/Line5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/RTRW"
+                    android:text="RT / RW"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    />
+                <Spinner
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtRTRW"
+                    android:layout_marginTop="10dp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/Line6"
+                android:layout_below="@id/Line7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/KodePos"
+                    android:text="Kode Pos"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    />
+                <AutoCompleteTextView
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtKodePos"
+                    android:layout_marginTop="10dp"
+                    android:inputType="number"
+                    android:hint="Kode Pos"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_below="@id/Line6"
                 android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nomok Kartu Keluarga"
                 android:textColor="#000000"
                 android:textSize="14sp"
+                android:layout_marginTop="10dp"
                 />
 
             <EditText
@@ -38,7 +211,7 @@
                 android:layout_below="@id/textView1"
                 android:inputType="number"
                 android:layout_marginTop="10dp"
-                android:hint=""
+                android:hint="Nomor KK"
                 />
 
             <TextView
@@ -62,6 +235,7 @@
                 android:layout_alignLeft="@id/textView1"
                 android:layout_below="@id/textView2"
                 android:layout_marginTop="10dp"
+                android:hint="Nama Kepala Keluarga"
                 android:inputType="textCapWords"
                 />
 
@@ -87,13 +261,14 @@
                 android:layout_below="@id/textView3"
                 android:layout_marginTop="10dp"
                 android:inputType="textCapWords"
+                android:hint="Alamat"
                 />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Anggota Keluarga"
+                android:text="Tanggal Dikeluarkan"
                 android:textColor="#000000"
                 android:textSize="14sp"
                 android:layout_below="@id/txtAlamat"
@@ -102,41 +277,23 @@
                 android:layout_alignRight="@+id/textView1"
                 />
 
-            <TableLayout
+            <EditText
+                android:id="@+id/txtTanggal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tablelayoutid"
+                android:layout_alignRight="@id/textView1"
+                android:layout_alignLeft="@id/textView1"
+                android:layout_below="@id/textView4"
                 android:layout_marginTop="10dp"
-                android:layout_below="@id/textView4">
-
-                <TableRow
-                    android:id="@+id/rowlay"
-                    android:background="@android:color/holo_blue_light"
-                    android:padding="5dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:text="NIK" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-
-                        android:text="Nama" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Status" />
-                </TableRow>
-            </TableLayout>
+                android:inputType="date"
+                android:hint="Tanggal Dikeluarkan"
+                />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/button1"
-                android:layout_below="@id/tablelayoutid"
+                android:layout_below="@id/txtTanggal"
                 android:layout_alignLeft="@+id/textView1"
                 android:layout_marginTop="50dp"
                 android:background="#32CD32"

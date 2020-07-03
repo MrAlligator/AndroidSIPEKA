@@ -1,49 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".PengaturanActivity"
     android:background="@color/contentBodyColor">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/txtJudul"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="30dp">
+        android:text="Pengaturan"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
 
-        <TextView
-            style="@style/viewParent.headerText"
-            android:text="Settings" />
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/swtch"
+        android:layout_below="@id/txtJudul"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ubah Tema"
+        android:textSize="16sp"
+        android:textColor="@color/colorPrimaryDark"/>
 
-        <Switch
-            android:id="@+id/darkModeSwitch"
-            style="@style/settingsText"
-            android:drawableLeft="@drawable/ic_dark_mode"
-            android:text="Dark Mode" />
-
-        <TextView
-            style="@style/viewParent.headerText.settingsMiniTitle"
-            android:text="Profile"/>
-
-
-        <TextView
-            style="@style/viewParent.headerText.settingsTextIcon"
-            android:drawableLeft="@drawable/ic_edit_password"
-            android:text="Change Password" />
-
-
-        <TextView
-            style="@style/viewParent.headerText.settingsTextIcon"
-            android:drawableLeft="@drawable/ic_languages"
-            android:text="Language" />
-
-        <TextView
-            style="@style/viewParent.headerText.settingsMiniTitle"
-            android:text="App ver 2.0.1"
-            android:textAlignment="center"/>
-
-    </LinearLayout>
-</ScrollView>
+</RelativeLayout>

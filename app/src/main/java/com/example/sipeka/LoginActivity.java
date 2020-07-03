@@ -204,11 +204,11 @@ public class LoginActivity extends AppCompatActivity {
                                         sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, true);
                                         startActivity(new Intent(mContext, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
 //                                           finish();
-                                       }else{
+                                       }else {
                                             showDialog2();
-                                           }
-                                       }else{
-                                    showDialog1();
+                                        }
+                                       }else {
+                                            showDialog1();
                                    }
                             } catch (JSONException e) {
                                 e.printStackTrace();

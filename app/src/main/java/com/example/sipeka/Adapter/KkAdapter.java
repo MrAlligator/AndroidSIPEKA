@@ -40,6 +40,13 @@ public class KkAdapter extends RecyclerView.Adapter<KkAdapter.MyViewHolder> {
                     mIntent.putExtra("No KK", mKkList.get(position).getNoKk());
                     mIntent.putExtra("Nama KK", mKkList.get(position).getNamaKk());
                     mIntent.putExtra("Alamat", mKkList.get(position).getAlamat());
+                    mIntent.putExtra("Kelurahan" , mKkList.get(position).getKelurahan());
+                    mIntent.putExtra("Kecamatan" , mKkList.get(position).getKecamatan());
+                    mIntent.putExtra("Kabupaten" , mKkList.get(position).getKabupaten());
+                    mIntent.putExtra("Kode Pos" , mKkList.get(position).getKodePos());
+                    mIntent.putExtra("Provinsi" , mKkList.get(position).getProvinsi());
+                    mIntent.putExtra("Tanggal" , mKkList.get(position).getDikeluarkanTanggal());
+                    mIntent.putExtra("Kode RT" , mKkList.get(position).getKodeRt());
                     view.getContext().startActivity(mIntent);
                 }
             });

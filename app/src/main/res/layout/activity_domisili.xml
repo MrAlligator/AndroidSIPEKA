@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".DomisiliActivity"
+    android:background="@color/contentBodyColor">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt1"
+        android:text="Pilih Nama "
+        android:textColor="#000000"
+        android:textSize="16dp"/>
+
+    <Spinner
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/SpNama"
+        android:layout_below="@+id/txt1"/>
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/SpNama"
+        android:id="@+id/btnCetak"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cetak"
+        android:layout_alignRight="@id/SpNama"/>
+
+</RelativeLayout>

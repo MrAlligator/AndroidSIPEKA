@@ -42,176 +42,180 @@ public class Ktp {
     @SerializedName("gambar_Ktp")
     private String gambar_Ktp;
 
-    public Ktp(String provinsi, String kabupaten, String nik, String nama, String tempatLahir, String tanggalLahir, String jenisKelamin, String golDarah, String alamat, String kodeRt, String kodeRw, String kelurahan, String kecamatan, String agama, String statusPerkawinan, String pekerjaan, String kewarganegaraan, String berlakuHingga, String gambar_Ktp) {
-        this.nik = nik;
-        this.noKk = noKk;
-        this.nama = nama;
-        this.tempatLahir = tempatLahir;
-        this.tanggalLahir = tanggalLahir;
-        this.jenisKelamin = jenisKelamin;
-        this.golDarah = golDarah;
-        this.alamat = alamat;
-        this.kodeRt = kodeRt;
-        this.kelurahan = kelurahan;
-        this.kecamatan = kecamatan;
-        this.agama = agama;
-        this.statusPerkawinan = statusPerkawinan;
-        this.pekerjaan = pekerjaan;
-        this.kewarganegaraan = kewarganegaraan;
-        this.berlakuHingga = berlakuHingga;
-        this.gambar_Ktp = gambar_Ktp;
-    }
-
-    public String getProvinsi() {
-        return provinsi;
-    }
-
-    public String getKabupaten() {
-        return kabupaten;
-    }
-
-    public String getNik() {
-        return nik;
-    }
-
-    public String getNoKk() {
-        return noKk;
-    }
-
-    public String getNama() {
-        return nama;
-    }
-
-    public String getTempatLahir() {
-        return tempatLahir;
-    }
-
-    public String getTanggalLahir() {
-        return tanggalLahir;
-    }
-
-    public String getJenisKelamin() {
-        return jenisKelamin;
-    }
-
-    public String getGolDarah() {
-        return golDarah;
-    }
-
-    public String getKodeRt() {
-        return kodeRt;
-    }
-
-    public String getAlamat() {
-        return alamat;
-    }
-
-    public String getKelurahan() {
-        return kelurahan;
-    }
-
-    public String getKecamatan() {
-        return kecamatan;
-    }
-
-    public String getAgama() {
-        return agama;
-    }
-
-    public String getStatusPerkawinan() {
-        return statusPerkawinan;
-    }
-
-    public String getPekerjaan() {
-        return pekerjaan;
-    }
-
-    public String getKewarganegaraan() {
-        return kewarganegaraan;
-    }
-
-    public String getBerlakuHingga() {
-        return berlakuHingga;
-    }
-
-    public String getGambar_Ktp() {
-        return gambar_Ktp;
-    }
-
-    public void setProvinsi(String provinsi) {
+    public Ktp(String provinsi, String kabupaten, String nik, String noKk, String nama, String tempatLahir, String tanggalLahir, String jenisKelamin, String golDarah, String alamat, String kodeRt, String kodeRw, String kelurahan, String kecamatan, String agama, String statusPerkawinan, String pekerjaan, String kewarganegaraan, String berlakuHingga, String gambar_Ktp) {
         this.provinsi = provinsi;
-    }
-
-    public void setKabupaten(String kabupaten) {
         this.kabupaten = kabupaten;
-    }
-
-    public void setNik(String nik) {
         this.nik = nik;
-    }
-
-    public void setNoKk(String noKk) {
         this.noKk = noKk;
-    }
-
-    public void setNama(String nama) {
         this.nama = nama;
-    }
-
-    public void setTempatLahir(String tempatLahir) {
         this.tempatLahir = tempatLahir;
-    }
-
-    public void setTanggalLahir(String tanggalLahir) {
         this.tanggalLahir = tanggalLahir;
-    }
-
-    public void setJenisKelamin(String jenisKelamin) {
         this.jenisKelamin = jenisKelamin;
-    }
-
-    public void setGolDarah(String golDarah) {
         this.golDarah = golDarah;
-    }
-
-    public void setKodeRt(String kodeRt) {
-        this.kodeRt = kodeRt;
-    }
-
-    public void setAlamat(String alamat) {
         this.alamat = alamat;
-    }
-
-    public void setKelurahan(String kelurahan) {
+        this.kodeRt = kodeRt;
         this.kelurahan = kelurahan;
-    }
-
-    public void setKecamatan(String kecamatan) {
         this.kecamatan = kecamatan;
-    }
-
-    public void setAgama(String agama) {
         this.agama = agama;
-    }
-
-    public void setStatusPerkawinan(String statusPerkawinan) {
         this.statusPerkawinan = statusPerkawinan;
-    }
-
-    public void setPekerjaan(String pekerjaan) {
         this.pekerjaan = pekerjaan;
-    }
-
-    public void setKewarganegaraan(String kewarganegaraan) {
         this.kewarganegaraan = kewarganegaraan;
-    }
-
-    public void setBerlakuHingga(String berlakuHingga) {
         this.berlakuHingga = berlakuHingga;
-    }
-
-    public void setGambar_Ktp(String gambar_Ktp) {
         this.gambar_Ktp = gambar_Ktp;
     }
-}
+
+        public String getProvinsi() {
+            return provinsi;
+        }
+
+        public String getKabupaten() {
+            return kabupaten;
+        }
+
+        public String getNik() {
+            return nik;
+        }
+
+        public String getNoKk() {
+            return noKk;
+        }
+
+        public String getNama() {
+            return nama;
+        }
+
+        public String getTempatLahir() {
+            return tempatLahir;
+        }
+
+        public String getTanggalLahir() {
+            return tanggalLahir;
+        }
+
+        public String getJenisKelamin() {
+            return jenisKelamin;
+        }
+
+        public String getGolDarah() {
+            return golDarah;
+        }
+
+        public String getKodeRt() {
+            return kodeRt;
+        }
+
+        public String getAlamat() {
+            return alamat;
+        }
+
+        public String getKelurahan() {
+            return kelurahan;
+        }
+
+        public String getKecamatan() {
+            return kecamatan;
+        }
+
+        public String getAgama() {
+            return agama;
+        }
+
+        public String getStatusPerkawinan() {
+            return statusPerkawinan;
+        }
+
+        public String getPekerjaan() {
+            return pekerjaan;
+        }
+
+        public String getKewarganegaraan() {
+            return kewarganegaraan;
+        }
+
+        public String getBerlakuHingga() {
+            return berlakuHingga;
+        }
+
+        public String getGambar_Ktp() {
+            return gambar_Ktp;
+        }
+
+        public void setProvinsi(String provinsi) {
+            this.provinsi = provinsi;
+        }
+
+        public void setKabupaten(String kabupaten) {
+            this.kabupaten = kabupaten;
+        }
+
+        public void setNik(String nik) {
+            this.nik = nik;
+        }
+
+        public void setNoKk(String noKk) {
+            this.noKk = noKk;
+        }
+
+        public void setNama(String nama) {
+            this.nama = nama;
+        }
+
+        public void setTempatLahir(String tempatLahir) {
+            this.tempatLahir = tempatLahir;
+        }
+
+        public void setTanggalLahir(String tanggalLahir) {
+            this.tanggalLahir = tanggalLahir;
+        }
+
+        public void setJenisKelamin(String jenisKelamin) {
+            this.jenisKelamin = jenisKelamin;
+        }
+
+        public void setGolDarah(String golDarah) {
+            this.golDarah = golDarah;
+        }
+
+        public void setKodeRt(String kodeRt) {
+            this.kodeRt = kodeRt;
+        }
+
+        public void setAlamat(String alamat) {
+            this.alamat = alamat;
+        }
+
+        public void setKelurahan(String kelurahan) {
+            this.kelurahan = kelurahan;
+        }
+
+        public void setKecamatan(String kecamatan) {
+            this.kecamatan = kecamatan;
+        }
+
+        public void setAgama(String agama) {
+            this.agama = agama;
+        }
+
+        public void setStatusPerkawinan(String statusPerkawinan) {
+            this.statusPerkawinan = statusPerkawinan;
+        }
+
+        public void setPekerjaan(String pekerjaan) {
+            this.pekerjaan = pekerjaan;
+        }
+
+        public void setKewarganegaraan(String kewarganegaraan) {
+            this.kewarganegaraan = kewarganegaraan;
+        }
+
+        public void setBerlakuHingga(String berlakuHingga) {
+            this.berlakuHingga = berlakuHingga;
+        }
+
+        public void setGambar_Ktp(String gambar_Ktp) {
+            this.gambar_Ktp = gambar_Ktp;
+        }
+    }
+
+
 

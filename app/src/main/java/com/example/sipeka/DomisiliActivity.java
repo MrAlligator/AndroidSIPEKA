@@ -4,14 +4,12 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class PengaturanActivity extends AppCompatActivity {
+public class DomisiliActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pengaturan);
-        setTheme(R.style.DarkTheme);
+        setContentView(R.layout.activity_domisili);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 }
